@@ -9,7 +9,7 @@ class UserAPI extends CI_Controller {
     public function __construct()
     {
 		parent::__construct();
-        $this->load->model('User_model');
+        $this->load->model('RegisterAndLogin_model');
     }
 
 	public function index()
@@ -21,7 +21,7 @@ class UserAPI extends CI_Controller {
 	{
 		$this->is_available = null;
 		$data=$this->input->post('email');
-		$response = $this->User_model->is_email_available($data);
+		$response = $this->RegisterAndLogin_model->is_email_available($data);
 		if($response==true){
 			$this->is_available = 'yes';
 		}else{
@@ -42,13 +42,17 @@ class UserAPI extends CI_Controller {
 		];
 
 		$data = array(
-			'user_name' => $this->input->post('username'),
-			'user_email' => $this->input->post('email'),
-			'user_passwordhash' => 	password_hash($this->input->post('password'), PASSWORD_BCRYPT, $options),
+			'user_FullName' => $this->input->post('username'),
+			'user_Email' => $this->input->post('email'),
+			'user_passwordHash' => 	password_hash($this->input->post('password'), PASSWORD_BCRYPT, $options),
+			'user_Lastlogin' => date('Y-m-d H:i:s'),
 		);
 
-			if($this->User_model->insert($data)==true){
+			if($this->RegisterAndLogin_model->insert($data)==true){
 			        echo "Records Saved Successfully";
+					
+					redirect(base_url() . 'index.php/Home/index');
+					
 			}
 			else{
 					echo "Insert error !";
@@ -57,7 +61,16 @@ class UserAPI extends CI_Controller {
 
 	public function login_post()
 	{
-		# code...
+		$this->is_available = null;
+		$email=$this->input->post('email');
+		$password=$this->input->post('password');
+		$response = $this->RegisterAndLogin_model->checkUser($email,$password);
+
+		$array = array(
+			'login_is_available' => $response
+		);
+
+		echo json_encode($array);
 	}
 
 }

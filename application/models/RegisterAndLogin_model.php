@@ -1,18 +1,18 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class User_model extends CI_Model {
+class RegisterAndLogin_model extends CI_Model {
 
     function __construct()
     {
-        $this->table = 'user';
+        $this->table = 'user_detail';
 		parent::__construct();
         $this->load->database();
     }
 
 	public function is_email_available($data)
 	{
-		$this->db->where('user_email', $data);
+		$this->db->where('user_Email', $data);
 		$query = $this->db->get($this->table);
 
 		if($query->num_rows() > 0){
@@ -27,7 +27,7 @@ class User_model extends CI_Model {
 	public function insert($data)
 	{
 
-		if($this->db->insert('user',$data))
+		if($this->db->insert('user_detail',$data))
 		{    
 			return 'Data is inserted successfully';
 		}
@@ -37,10 +37,26 @@ class User_model extends CI_Model {
 		}
 	}
 
-	public function checkUser($data)
+
+	public function checkUser($email, $password)
 	{
-        $this->user_email  = $data['email'];
-        $query = $this->db->get_where($this->table, $this);
-        return $query->row_array();
+		$this->db->where('user_Email', $email);
+		$query = $this->db->get($this->table);
+
+		if($query->num_rows() > 0){
+			foreach ($query->result() as $row ) {
+				if(password_verify($password,$row->user_passwordHash)){
+					$this->session->userdata('id',$row->user_id );
+					return true;
+				}else{
+					return false;
+				}
+			}
+		}
+		else{
+			return false;
+		}
+
 	}
+
 }

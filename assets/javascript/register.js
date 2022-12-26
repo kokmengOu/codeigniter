@@ -6,9 +6,13 @@ const app = createApp({
     return {
       url: "https://w1790671.users.ecs.westminster.ac.uk/demo/index.php/",
 	  dynamic_class : true,
+	  dynamic_login_class : true,
 	  message : null,
 	  is_disable : false,
+	  login_is_disable : false,
 	  class_name : '',
+	  login_class_name : '',
+	  login_message : '',
 	  Repassword : null,
 	  register:{
 		username: null,
@@ -35,7 +39,7 @@ const app = createApp({
 				if(response.data.is_available != "yes" )
 				{
 					console.log(response.data.is_available);
-					this.dynamic_class = true;
+					this.dynamic_class = false;
 					this.message = 'This Email is Available for registration';
 					this.is_disable = false;
 					this.class_name = 'success'
@@ -61,24 +65,24 @@ const app = createApp({
           }).catch((err) => {
               console.log(err);
           });
-    }
-  	},
+    },
 
 	checksignIn(){
 		const form = new FormData();
 		form.append('email', this.signIn.email);
 		form.append('password', this.signIn.password);
-		axios.post(this.url + "UserAPI/signIn_post", form)
+		axios.post(this.url + "UserAPI/login_post", form)
 			.then((result) => {
-				if(result.data.is_available != "yes" )
+				if(result.data.login_is_available != "password is valid" )
 				{
-					console.log(result.data.is_available);
+					console.log(result.data.login_is_available);
 				}else{
-					this.dynamic_class = true;
+					alert(this.url + "Home/index");
+					console.log(result.data.login_is_available);
+
 				}
-			}).catch((err) => {
-				console.error(err);
-			});
+			})
+	}
 	}
 
 })

@@ -22,19 +22,18 @@
           <input class="form__input" type="text" placeholder="Name" name="username" v-model.trim="register.username">
           <input class="form__input" type="email" placeholder="Email" name="email" v-model.trim="register.email" :class="class_name" @keyup="checkEmail()">
 		  		<span :class="[dynamic_class ? 'success' : 'danger']">{{ message }}</span>
-          <input class="form__input" type="password" placeholder="Password" name="password" v-model="register.password" >
+          <input class="form__input" type="password" placeholder="Password" name="password" v-model.trim="register.password" >
           <input class="form__input" type="password" placeholder="Re-Password" name="password" v-model="Repassword" >
-          <button class="form__button button submit" :disabled="is_disable"  @click.prevent="addUser()">SIGN UP</button>
+          <button type="submit" class="form__button button submit" :disabled="is_disable"  @click="addUser()">SIGN UP</button>
         </form>
       </div>
       <div class="container b-container" id="b-container">
-        <form class="form" id="b-form" method="" action="">
+        <form class="form" id="b-form" method="" action=" ">
           <h2 class="form_title title">Sign In</h2>
  
-          <input class="form__input" type="text" placeholder="Email" name="email" v-model="signIn.email">
-          <input class="form__input" type="password" placeholder="Password" name="password" v-model="signIn.password">
-          <a class="form__link">Forgot your password?</a>
-          <button class="form__button button submit" :disabled="is_disable" @click="checkUser()"  >SIGN IN</button>
+          <input class="form__input" type="email" placeholder="Email" name="email" v-model.trim="signIn.email" >
+          <input class="form__input" type="password" placeholder="Password" name="password" v-model.trim="signIn.password" >
+          <button class="form__button button submit" type="submit" @click="checksignIn()" >SIGN IN</button>
         </form>
       </div>
       <div class="switch" id="switch-cnt">
