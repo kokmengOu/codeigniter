@@ -566,11 +566,16 @@ body{
   }
 
   .content-container .inside-container{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
     position: relative;
     top: 3rem;
+  }
+
+  .content-container .inputVisible{
+    display: none;
+  }
+  
+  .content-container .reviewVisible{
+    display: none;
   }
 
   .content-container .tag-container{

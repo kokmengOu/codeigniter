@@ -8,12 +8,6 @@ class HomeAPI extends CI_Controller {
 		parent::__construct();
         $this->load->model('Question_model');
 		$this->load->model('Tag_model');
-
-
-
-		if(!$this->session->userdata('id')){
-			redirect('UserAPI/index');
-		}
     }
 
 	public function index()
@@ -28,6 +22,7 @@ class HomeAPI extends CI_Controller {
 		{
 		 $this->session->unset_userdata($row);
 		}
+		$this->session->sess_destroy();
 		redirect('UserAPI');
 	}
 
@@ -37,11 +32,32 @@ class HomeAPI extends CI_Controller {
 	}
 
 	public function getQuestionTag()
-	{
-		$response["questionTag"] = $this->Question_model->getQuestionTag();
+	{		
+		$modelCode = $this->uri->segment(3);
+		
+		$response["questionTags"] = $this->Question_model->getQuestionTag($modelCode);
 		echo json_encode($response);
 	}
 
+	public function getTag()
+	{
 
+		$response["tags"] = $this->Tag_model->getTag();
+		echo json_encode($response);
+	}
+
+	public function upvote()
+	{
+		$id = $this->uri->segment(3);
+		$count = $this->uri->segment(4);
+		$this->Question_model->upvote($id,$count);
+	}
+
+	public function downvote()
+	{
+		$id = $this->uri->segment(3);
+		$count = $this->uri->segment(4);
+		$this->Question_model->downvote($id,$count);
+	}
 
 }

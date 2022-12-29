@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="<?php echo base_url() ;?>assets/css/index-style.css">
+    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/index-style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&display=swap" rel="stylesheet">
@@ -121,16 +121,32 @@
               </form>
 
             </div>
-            <div class="add-Question-hero">
+            <div class="add-Question-hero" >
                 <a href="#" class="btn-question">Add Question</a>
             </div>
             <div class="add-user-hero">
-              <a href="">
-                <div>
-                    <img src="" alt="img">
-                    <div class="username profile">{{user_name}}</div>
-                </div>
-            </a>
+								<?php 
+								if(isset($_SESSION['loggin_in'])){
+								?>
+									<a href="<?php echo base_url() ;?>index.php/UserAPI/index" >
+										<div class="row">
+												<div class="col-sm-4"><img src='' alt='img'></div>
+												<div class="col-sm-8"><?php echo $this->session->userdata('username')?></div>
+										</div>
+									</a>
+								<?php 
+								}else{
+								?>
+									<a href="<?php echo base_url() ;?>index.php/UserAPI/index">
+										<div>
+											<buttom class="btn btn-outline-secondary">Login</buttom>
+										</div>
+									</a>
+								<?php 
+								}
+								?>
+
+
             </div>
         </div>
         <div class="side-container">
@@ -148,44 +164,71 @@
                 </div>
 
                 <div class="add-container" >
-                    <button type="button" class="btn btn-outline-primary">Add Question</button>
-                    <button type="button" class="btn btn-outline-secondary">Add Tag</button>
+                  <button type="button" class="btn btn-outline-primary">Add Question</button>
+                  <button type="button" class="btn btn-outline-secondary">Add Tag</button>
                 </div>
                 <div class="logout-container">
-                  <div><img src="img/shutdown.png" alt="Girl in a jacket" width="20" height="20"></div>
-                    <div>log out</div>
-                </div>
+									<?php 
+											if (isset($_SESSION['loggin_in'])) {
+									?>
+												<a href="<?php echo base_url();?>index.php/HomeAPI/logout">
+													<div class="row">
+															<div class="col-sm-8">log out</div>
+															<div class="col-sm-4"><img src="<?php echo base_url();?>assets/img/shutdown.png" alt="Girl in a jacket" width="20" height="20"></div>
+														</div>
+												</a>
+									<?php 
+											}else{}
+									?>
+								</div>
             </div>
         </div>
-        <div class="title-container">{{title}}</div>
-        <div class="content-container">
-          <div class="inside-container">
+        <div class="title-container" >{{title}}</div>
+				<div class="content-container" >
+          <div class="inside-container" :class="{ inputVisible : isinputVisible}">
             <div class="container a-container" id="a-container">
                 <form class="form" id="a-form" method="" action="">
                     <div class="mb-3">
-                        <label for="validationCustom03" class="form-label">{{title}}</label>
-                        <input type="text" class="form-control" id="validationCustom03" placeholder="Enter your title" name="title" v-model="question.title" :class="class_name" @keyup="checkTitle()" required>
+                        <label for="validationCustom03" class="form-label"><h5>TAG TITLE</h5></label>
+                        <input type="text" class="form-control" :class="[isInvalid]" id="validationCustom03" placeholder="Enter your title" name="title" v-model="text_title" required>
                         <div class="invalid-feedback">
                           Please provide a valid Title.
                         </div>
                     </div>
                     <div class="mb-3">
-                        <label for="formFileSm" class="form-label">{{putImg}}</label>
-                        <input class="form-control form-control-sm" id="formFileSm" type="file" >
+                      <label for="validationTextarea" class="form-label"><h5>TAG CONTENT</h5></label>
+                      <textarea class="form-control" :class="[isInvalid]" id="validationTextarea" placeholder="Required example textarea" @:key="checkText()"  rows="10" v-model="text_content" required ></textarea>
+                      <div class="invalid-feedback">
+                        Please enter a content in the textarea.
+                      </div>
                     </div>
-                        <div class="mb-3">
-                          <label for="validationTextarea" class="form-label">Textarea</label>
-                          <textarea class="form-control" id="validationTextarea" placeholder="Required example textarea" name="content" v-model="question.content":class="class_name" @keyup="checkContent()" required></textarea>
-                        </div>
                     <div class="col-auto">
-                        <button class="btn btn-primary" type="submit">Submit form</button>
+                        <button class="btn btn-primary" type="button" @click="sendForm()">Next</button>
                     </div>
                 </form>
             </div>
           </div>
+          <div class="inside-container min-wv-100 " :class="{ reviewVisible : isreviewVisible }">
+            <div class="container a-container" id="a-container">
+                    <div class="mb-3">
+                        <div><h5>TAG Review</h5></div>
+                        <div class="container-sm bg-white border border-secondary rounded">{{text_title}}</div>
+                    </div>
+                    <div class="mb-3">
+                        <div><h5>TAG Review</h5></div>
+                        <div class="container-lg bg-white border border-secondary rounded">{{text_content}}</div>
+                    </div>
+                    <div class="col-auto">
+                      <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                        <button class="btn btn-dark me-md-2" type="button" @click="sendForm()">Go back</button>
+                        <button class="btn btn-primary" type="submit" @click="submitForm()">Submit</button>
+                      </div>
+                    </div>
+            </div>
+          </div>
         </div>
-    </div>
+  	</div>	
 
-    <script src="<?php echo base_url(); ?>assets/javascript/addquestion.js"></script>
+    <script src="<?php echo base_url() ;?>assets/javascript/index.js"></script>
 </body>
 </html>

@@ -184,61 +184,51 @@
             </div>
         </div>
         <div class="title-container" >{{title}}</div>
-        <div class="content-container">
-          <div class="inside-container">
-            <section class="tag-container">
-              <div class="relate_tag">Relate Tag</div> 
-              <div class="each_tag_container">
-                <div v-for="tag in tags" :key="tag.id">
-                  <button type="button" class="each_tag">{{tag.tag_title}}</button>
-                </div>
-              </div>
-            </section>
-            <section class="question-container">
-              <template  v-for="question in questions" :key="question.question_id">  <!--https://stackoverflow.com/questions/58424186/using-v-for-and-v-bindkey-->
-                <div class="each-question-section">
-                    <div class="userImg">{{question.img_id}}</div>
-                    <div class="username">{{question.user_FullName}}</div>
-                    <div class="content-time">{{question.question_published}}</div>
-                    <div class="question-title">{{question.question_title}}</div>
-                    <div class="question-content">{{question.question_content}}</div>
-                    <div class="question_tag_container">
-												<div class="question_tag" v-if="question.tag_one != '' || question.tag_one != null">
-                            <button>{{question.tag_one}}</button>
-                        </div>	
-												<div class="question_tag" v-if="question.tag_two != '' || question.tag_two != null ">
-                            <button>{{question.tag_two}}</button>
-                        </div>	
-												<div class="question_tag" v-if="question.tag_three != '' || question.tag_three != null ">
-                            <button>{{question.tag_three}}</button>
-                        </div>	
-												<div class="question_tag" v-if="question.tag_four != '' || question.tag_four != null ">
-                            <button>{{question.tag_four}}</button>
-                        </div>	
-												<div class="question_tag" v-if="question.tag_five != '' || question.tag_five != null  ">
-                            <button>{{question.tag_five}}</button>
-                        </div>	
+				<div class="content-container" >
+          <div class="inside-container" :class="{ inputVisible : isinputVisible}">
+            <div class="container a-container" id="a-container">
+                <form class="form" id="a-form" method="" action="">
+                    <div class="mb-3">
+                        <label for="validationCustom03" class="form-label"><h5>TAG TITLE</h5></label>
+                        <input type="text" class="form-control" :class="[isInvalid]" id="validationCustom03" placeholder="Enter your title" name="title" v-model="text_title" required>
+                        <div class="invalid-feedback">
+                          Please provide a valid Title.
+                        </div>
                     </div>
-                    <div class="question-upvote" @click.once="question.question_upvote++ , Taggle_upvote(question.question_id , question.question_upvote)">
-                      <div class="img">
-                        <img src="<?php echo base_url(); ?>assets/img/9055013_bx_upvote_icon.png" alt="" srcset="" width="30" height="30">
+                    <div class="mb-3">
+                      <label for="validationTextarea" class="form-label"><h5>TAG CONTENT</h5></label>
+                      <textarea class="form-control" :class="[isInvalid]" id="validationTextarea" placeholder="Required example textarea" @:key="checkText()"  rows="10" v-model="text_content" required ></textarea>
+                      <div class="invalid-feedback">
+                        Please enter a content in the textarea.
                       </div>
-                      {{question.question_upvote}}
                     </div>
-                    <div class="question-downvote" @click.once="question.question_downvote++ , Taggle_downvote(question.question_id ,question.question_downvote)">
-                      <div class="img">
-                        <img src="<?php echo base_url(); ?>assets/img/9054487_bx_downvote_icon.png" alt="" srcset="" width="30" height="30">
+                    <div class="col-auto">
+                        <button class="btn btn-primary" type="button" @click="sendForm()">Next</button>
+                    </div>
+                </form>
+            </div>
+          </div>
+          <div class="inside-container min-wv-100 " :class="{ reviewVisible : isreviewVisible }">
+            <div class="container a-container" id="a-container">
+                    <div class="mb-3">
+                        <div><h5>TAG Review</h5></div>
+                        <div class="container-sm bg-white border border-secondary rounded">{{text_title}}</div>
+                    </div>
+                    <div class="mb-3">
+                        <div><h5>TAG Review</h5></div>
+                        <div class="container-lg bg-white border border-secondary rounded">{{text_content}}</div>
+                    </div>
+                    <div class="col-auto">
+                      <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                        <button class="btn btn-dark me-md-2" type="button" @click="sendForm()">Go back</button>
+                        <button class="btn btn-primary" type="submit" @click="submitForm(<?php echo $this->session->userdata('id')?>)">Submit</button>
                       </div>
-                      {{question.question_downvote}}
                     </div>
-                </div>
-            </section>
-        </template>
-            </section>
+            </div>
           </div>
         </div>
-    </div>
+  	</div>	
 
-    <script src="<?php echo base_url() ;?>assets/javascript/index.js"></script>
+    <script src="<?php echo base_url() ;?>assets/javascript/addTag.js"></script>
 </body>
 </html>

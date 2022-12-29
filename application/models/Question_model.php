@@ -12,7 +12,7 @@ class Question_model extends CI_Model {
 
 	public function getQuestion()
 	{
-		$this->db->select('user_detail.user_FullName,question.question_id, question.question_title, question.question_content, question.question_published, question.question_upvote, question.question_downvote');
+		$this->db->select('user_detail.user_FullName,question.question_id, question.question_title, question.question_content, question.question_published, question.question_upvote, question.question_downvote, question.tag_one, question.tag_two, question.tag_three, question.tag_four, question.tag_five ');
 		
 		$this->db->join('user_detail', 'user_detail.user_id=question.question_id');
 		
@@ -26,7 +26,7 @@ class Question_model extends CI_Model {
 		}
 	}
 
-	public function getQuestionTag(){
+	public function getQuestionTag($modelCode){
 
 		$this->db->select('tag.tag_title, tag.tag_id, question.question_id');
 		
@@ -41,5 +41,19 @@ class Question_model extends CI_Model {
 		else{
 			return 'ERROR 404';
 		}
+	}
+
+	public function upvote($id,$count)
+	{
+			$this->db->set('question_upvote', $count);
+			$this->db->where('question_id', $id);
+			$this->db->update('question');
+	}
+
+	public function downvote($id,$count)
+	{
+			$this->db->set('question_downvote', $count);
+			$this->db->where('question_id', $id);
+			$this->db->update('question');
 	}
 }

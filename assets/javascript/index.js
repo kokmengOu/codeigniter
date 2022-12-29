@@ -8,6 +8,8 @@ const app = createApp({
             title: 'MEnG',
             upvote_isVisible: true,
             down_isVisible: true,
+			questions:[],
+			questionTags:[],
             menus: [
                 { 
                     message: 'HOME',
@@ -28,31 +30,7 @@ const app = createApp({
                     message: 'USERS',
                 }],
 
-            tags :[
-                { 
-                    tag_id : '1',
-                    tag_title: 'HONEY_1',
-                }, 
-                { 
-                    tag_id : '2',
-                    tag_title: 'HONEY_2',
-                }, 
-                { 
-                    tag_id : '3',
-                    tag_title: 'HONEY_3',
-                },
-                { 
-                    tag_id : '4',
-                    tag_title: 'HONEY_4',
-                },  
-                { 
-                    tag_id : '5',
-                    tag_title: 'HONEY_5',
-                }, 
-                { 
-                    tag_id : '6',
-                    tag_title: 'HONEY_6',
-                }],
+            tags :[],
             
         }
     },
@@ -60,6 +38,7 @@ const app = createApp({
 	created() {
 		this.showQuestion();
 		this.showQuestionTag();
+		this.showTag();
 	},
 
     methods: {
@@ -69,6 +48,8 @@ const app = createApp({
 			.then((result) => {
 				result.data.questions;
 				console.log(result.data.questions);
+				this.questions = result.data.questions.slice();
+				console.log(this.questions.question_id == result.data.questions.question_id);
 			}).catch((err) => {
 				console.log(err);
 			});
@@ -77,14 +58,44 @@ const app = createApp({
 		showQuestionTag(){
 			axios.get(this.url + "HomeAPI/getQuestionTag")
 			.then((result) => {
-				result.data.questionTag;
-				console.log(result.data.questionTag);
+				result.data.questionTags;
+				this.questionTags = result.data.questionTags.slice();
+				console.log(result.data.questionTags);
 			}).catch((err) => {
 				console.log(err);
-				
+			});
+		},
+
+
+		showTag(){
+			axios.get(this.url + "HomeAPI/getTag")
+			.then((result) => {
+				result.data.tags;
+				console.log(result.data.tags);
+				this.tags = result.data.tags.slice();
+				console.log(this.tags);
+			}).catch((err) => {
+				console.log(err);
+			});
+		},
+
+		Taggle_upvote(id , count){
+			axios.post(this.url + "HomeAPI/upvote/" + id + "/" + count )
+			.then((result) => {
+				console.log(result);
+			}).catch((err) => {
+				console.log(err);
+			});
+		},
+
+		Taggle_downvote(id , count){
+			axios.post(this.url + "HomeAPI/downvote/" + id + "/" + count )
+			.then((result) => {
+				console.log(result);
+			}).catch((err) => {
+				console.log(err);
 			});
 		}
-
     },
 })
 
