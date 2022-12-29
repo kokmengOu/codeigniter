@@ -42,12 +42,12 @@ const app = createApp({
 					this.dynamic_class = false;
 					this.message = 'This Email is Available for registration';
 					this.is_disable = false;
-					this.class_name = 'success'
+					this.class_name = 'danger'
 				}else{
 					this.dynamic_class = true;
 					this.message = 'This email is already registered';
 					this.is_disable = true;
-					this.class_name = 'danger';
+					this.class_name = 'success';
 				}
 			})
 		}
@@ -61,7 +61,7 @@ const app = createApp({
       form.append("password", this.register.password);
       axios.post(this.url + "UserAPI/register_post" , form)
           .then(() => {
-              alert("You have been successfully registered")
+              alert("You have been successfully registered , Please sign in you account")
           }).catch((err) => {
               console.log(err);
           });
@@ -73,14 +73,8 @@ const app = createApp({
 		form.append('password', this.signIn.password);
 		axios.post(this.url + "UserAPI/login_post", form)
 			.then((result) => {
-				if(result.data.login_is_available != "password is valid" )
-				{
-					console.log(result.data.login_is_available);
-				}else{
-					alert(this.url + "Home/index");
-					console.log(result.data.login_is_available);
-
-				}
+				console.log(result.data.login_is_available);
+				window.location.assign(this.url + "HomeAPI/index");
 			})
 	}
 	}

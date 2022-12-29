@@ -46,8 +46,7 @@ class RegisterAndLogin_model extends CI_Model {
 		if($query->num_rows() > 0){
 			foreach ($query->result() as $row ) {
 				if(password_verify($password,$row->user_passwordHash)){
-					$this->session->userdata('id',$row->user_id );
-					return true;
+					$this->session->set_userdata('id', $row->user_id);
 				}else{
 					return false;
 				}

@@ -9,6 +9,10 @@ class UserAPI extends CI_Controller {
     public function __construct()
     {
 		parent::__construct();
+		if($this->session->userdata('id'))
+		{
+		 redirect('HomeAPI/index');
+		}
         $this->load->model('RegisterAndLogin_model');
     }
 
@@ -51,7 +55,7 @@ class UserAPI extends CI_Controller {
 			if($this->RegisterAndLogin_model->insert($data)==true){
 			        echo "Records Saved Successfully";
 					
-					redirect(base_url() . 'index.php/Home/index');
+					redirect('HomeAPI/index');
 					
 			}
 			else{
@@ -67,8 +71,15 @@ class UserAPI extends CI_Controller {
 		$response = $this->RegisterAndLogin_model->checkUser($email,$password);
 
 		$array = array(
-			'login_is_available' => $response
+			'login_is_available' => $this->session->userdata('id')
 		);
+
+		if ($response == '') {
+			
+			redirect('HomeAPI/index','refresh');
+			
+			
+		}
 
 		echo json_encode($array);
 	}

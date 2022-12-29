@@ -1,63 +1,45 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-require APPPATH . '/libraries/RestController.php';
-use chriskacerguis\RestServer\RestController;
+class Question_model extends CI_Model {
 
-class UserAPI extends CI_Controller {
-    
-    public function __construct()
+    function __construct()
     {
+        $this->table ='question';
 		parent::__construct();
-        $this->load->model('User_model');
+        $this->load->database();
     }
 
-	public function index()
+	public function getQuestion()
 	{
-		$this->load->view('register');
-	}
-
-	public function checkEmail()
-	{
-		$this->is_available = null;
-		$data=$this->input->post('email');
-		$response = $this->User_model->is_email_available($data);
-		if($response==true){
-			$this->is_available = 'yes';
-		}else{
-			$this->is_available = 'no';
+		$this->db->select('user_detail.user_FullName,question.question_id, question.question_title, question.question_content, question.question_published, question.question_upvote, question.question_downvote');
+		
+		$this->db->join('user_detail', 'user_detail.user_id=question.question_id');
+		
+		$query = $this->db->get('question');
+		
+		if ($query->num_rows() > 0) {
+			return $query->result();
 		}
-
-		$array = array(
-			'is_available' => $this->is_available
-		);
-
-		echo json_encode($array);
+		else{
+			return 'ERROR 404';
+		}
 	}
 
-	public function register_post()
-	{
-		$options = [
-			'cost' => 12,
-		];
+	public function getQuestionTag(){
 
-		$data = array(
-			'user_name' => $this->input->post('username'),
-			'user_email' => $this->input->post('email'),
-			'user_passwordhash' => 	password_hash($this->input->post('password'), PASSWORD_BCRYPT, $options),
-		);
+		$this->db->select('tag.tag_title, tag.tag_id, question.question_id');
+		
+		$this->db->join('question', 'question_tag.question_id = question.question_id');
+		$this->db->join('tag', 'question_tag.tag_id = tag.tag_id');
 
-			if($this->User_model->insert($data)==true){
-			        echo "Records Saved Successfully";
-			}
-			else{
-					echo "Insert error !";
-			}
+		$query = $this->db->get('question_tag');
+		
+		if ($query->num_rows() > 0) {
+			return $query->result();
+		}
+		else{
+			return 'ERROR 404';
+		}
 	}
-
-	public function login_post()
-	{
-		# code...
-	}
-
 }

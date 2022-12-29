@@ -24,7 +24,7 @@
 		  		<span :class="[dynamic_class ? 'success' : 'danger']">{{ message }}</span>
           <input class="form__input" type="password" placeholder="Password" name="password" v-model.trim="register.password" >
           <input class="form__input" type="password" placeholder="Re-Password" name="password" v-model="Repassword" >
-          <button type="submit" class="form__button button submit" :disabled="is_disable"  @click="addUser()">SIGN UP</button>
+          	<button type="submit" class="form__button button submit" :disabled="is_disable" @click="addUser()">SIGN UP</button>
         </form>
       </div>
       <div class="container b-container" id="b-container">
@@ -33,7 +33,9 @@
  
           <input class="form__input" type="email" placeholder="Email" name="email" v-model.trim="signIn.email" >
           <input class="form__input" type="password" placeholder="Password" name="password" v-model.trim="signIn.password" >
-          <button class="form__button button submit" type="submit" @click="checksignIn()" >SIGN IN</button>
+					<a href="<?php echo base_url();?>index.php/HomeAPI/index">
+          	<button class="form__button button submit" type="submit" @click="checksignIn()" > SIGN IN</button>
+					</a>
         </form>
       </div>
       <div class="switch" id="switch-cnt">
