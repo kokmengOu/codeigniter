@@ -153,13 +153,12 @@
             <div class="left">
                 <div class="menu__container"> 
                   <div class="home-container">
-                    <a href="#" class="menu_btn" style="width: 50px;">Home</a>
+                    <a href="<?php echo base_url(); ?>index.php/HomeAPI/index" class="menu_btn" style="width: 50px;">Home</a>
                   </div>
                     <div class="public-container">Public
-                      <a href="#" class="menu_btn">Questions</a>
-                      <a href="#" class="menu_btn">Tags</a>
-                      <a href="#" class="menu_btn">Unquestion</a>
-                      <a href="#" class="menu_btn">Users</a>
+                      <a href="<?php echo base_url(); ?>index.php/QuestionAPI/index" class="menu_btn">Questions</a>
+                      <a href="<?php echo base_url(); ?>index.php/TagAPI/index" class="menu_btn">Tags</a>
+                      <a href="<?php echo base_url(); ?>index.php/OtherUserAPI/index" class="menu_btn">Users</a>
                     </div>
                 </div>
 

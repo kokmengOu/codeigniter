@@ -10,53 +10,44 @@ class Profile_model extends CI_Model {
         $this->load->database();
     }
 
-	public function is_email_available($data)
+	public function getUserDetail($data)
 	{
-		$this->db->where('user_Email', $data);
+		$this->db->where('user_id', $data);
 		$query = $this->db->get($this->table);
 
 		if($query->num_rows() > 0){
-			return true;
+			return $query->result();
 		}
 		else{
-			return false;
-		}
-
-	}
-
-	public function insert($data)
-	{
-
-		if($this->db->insert('user_detail',$data))
-		{    
-			return 'Data is inserted successfully';
-		}
-		  else
-		{
-			return "Error has occured";
+			return "Error 404";
 		}
 	}
 
-
-	public function checkUser($email, $password)
+	public function getUserQuestion($data)
 	{
-		$this->db->where('user_Email', $email);
-		$query = $this->db->get($this->table);
+		$this->db->where('user_id', $data);
+		$query = $this->db->get('question');
 
 		if($query->num_rows() > 0){
-			foreach ($query->result() as $row ) {
-				if(password_verify($password,$row->user_passwordHash)){
-					$this->session->set_userdata('id',$row->user_id );
-					return true;
-				}else{
-					return false;
-				}
-			}
+			return $query->result();
 		}
 		else{
-			return false;
+			return "Error 404";
 		}
+	}
 
+
+	public function getUserTag($data)
+	{
+		$this->db->where('user_id', $data);
+		$query = $this->db->get('tag');
+
+		if($query->num_rows() > 0){
+			return $query->result();
+		}
+		else{
+			return "Error 404";
+		}
 	}
 
 }
