@@ -104,6 +104,12 @@ body{
     font-size: var(--fs-body);
 }
 
+a{
+	text-decoration: none;
+	color: var(--font--color--light);
+}
+
+
 .video-bg{
 	position : absolute;
 	top: 50%;
@@ -567,8 +573,10 @@ body{
 
   .content-container .inside-container{
     position: relative;
+		max-width: 150vh;
     top: 3rem;
-		left: 2rem;
+		left: 3rem;
+    width: 95%;
   }
 
   .content-container .inputVisible{

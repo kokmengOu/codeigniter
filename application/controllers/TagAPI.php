@@ -18,6 +18,11 @@ class TagAPI extends CI_Controller {
 
 	public function index()
 	{
+		$this->load->view('listtag');
+	}
+
+	public function createTag()
+	{
 		$this->load->view('addTag');
 	}
 
@@ -41,11 +46,16 @@ class TagAPI extends CI_Controller {
 
 	public function getTag()
 	{
-
+		$response["tags"] = $this->Tag_model->getTag();
+		echo json_encode($response);
 	}
 
-	public function deleteTag()
+	public function eachTag()
 	{
+		$response["EachTag"] = $this->Tag_model->EachTag($this->uri->segment(3));
+		echo json_encode($response);
 	}
+
+
 
 }

@@ -14,7 +14,7 @@ class QuestionAPI extends CI_Controller {
 
 	public function index()
 	{
-		$this->load->view('question');
+		$this->load->view('listquestion');
 	}
 
 	public function addQuestion()
@@ -36,14 +36,22 @@ class QuestionAPI extends CI_Controller {
 
 	public function addUpvote()
 	{
+		$id = $this->uri->segment(3);
+		$count = $this->uri->segment(4);
+		$this->Question_model->upvote($id,$count);
 	}
 
 	public function addDownvote()
 	{
+		$id = $this->uri->segment(3);
+		$count = $this->uri->segment(4);
+		$this->Question_model->downvote($id,$count);
 	}
 
 	public function getQuestion()
 	{
+		$response["questions"] = $this->Question_model->getQuestion();
+		echo json_encode($response);
 	}
 
 	public function getanswer()

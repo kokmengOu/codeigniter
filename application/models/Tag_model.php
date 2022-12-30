@@ -31,5 +31,16 @@ class Tag_model extends CI_Model {
 		}
 	}
 
+	public function EachTag($data)
+	{
+		$this->db->where('tag_id', $data);
+		$query = $this->db->get($this->table);
+		if($query->num_rows() > 0){
+			return $query->result();
+		}else{
+			return false;
+		}
+	}
+
 
 }

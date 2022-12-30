@@ -128,7 +128,7 @@
 								<?php 
 								if(isset($_SESSION['loggin_in'])){
 								?>
-									<a href="<?php echo base_url() ;?>index.php/UserAPI/index" >
+									<a href="<?php echo base_url() ;?>index.php/ProfileAPI/index" >
 										<div class="row">
 												<div class="col-sm-4"><img src='' alt='img'></div>
 												<div class="col-sm-8"><?php echo $this->session->userdata('username')?></div>
@@ -163,8 +163,12 @@
                 </div>
 
                 <div class="add-container" >
-                  <button type="button" class="btn btn-outline-primary">Add Question</button>
-                  <button type="button" class="btn btn-outline-secondary">Add Tag</button>
+									<a href="<?php echo base_url(); ?>index.php/QuestionAPI/createQuestion" class="row">
+                  	<button type="button" class="btn btn-outline-primary">Add Question</button>									
+									</a>
+                  <a href="<?php echo base_url(); ?>index.php/TagAPI/createTag" class="row">
+										<button type="button" class="btn btn-outline-secondary">Add Tag</button>
+									</a>
                 </div>
                 <div class="logout-container">
 									<?php 
@@ -231,8 +235,7 @@
                       {{question.question_downvote}}
                     </div>
                 </div>
-            </section>
-        </template>
+        			</template>
             </section>
           </div>
         </div>

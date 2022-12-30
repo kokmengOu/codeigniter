@@ -71,34 +71,24 @@ const app = createApp({
 			});
 		},
 
-		updateDescription(){
-			axois.post(this.url + "ProfileAPI/updateDescription")
-			.then((result) => {
-				alert("Description Successfully Updated")
-			}).catch((err) => {
-				alert("error 404");
-				console.log(err);
-			});
-		},
-
-		updateBio(){
-			axois.post(this.url + "ProfileAPI/updateBio")
-			.then((result) => {
-				alert("Description Successfully Updated")
-			}).catch((err) => {
-				alert("error 404");
-				console.log(err);
-			});
-		},
-
 		deleteQuestion(id)
 		{
-			console.log(id);
+			axios.post(this.url + "ProfileAPI/deleteQuestion/" + id)
+			.then((result) => {
+				alert("Question Successfully delete");
+				window.location.assign(this.url + "ProfileAPI/index");
+			})
 		},
 
 		deletetag(id)
 		{
-
+			const form = new FormData();
+			form.append('tagID', id);
+			axios.post(this.url + "ProfileAPI/deleteTag", form)
+			.then((result) => {
+				alert("Tag Successfully delete");
+				window.location.assign(this.url + "ProfileAPI/index");
+			})
 		},
 
 		sendFormDescription(){
@@ -106,7 +96,14 @@ const app = createApp({
 			{
                 this.is_invalid_Description = 'is-invalid';
 			}else{
-                this.is_invalid_Description = '';
+				console.log(this.Description_text);
+				const form = new FormData();
+				form.append('description', this.Description_text);
+				axios.post(this.url + "ProfileAPI/updateDescription", form)
+				.then((result) => {
+					alert("description Successfully Updated");
+					window.location.assign(this.url + "ProfileAPI/index");
+				})
 			}
 		},
 
@@ -115,7 +112,13 @@ const app = createApp({
 			{
                 this.is_invalid_bio = 'is-invalid';
 			}else{
-                this.is_invalid_bio = '';
+				const form = new FormData();
+				form.append('bio', this.bio_text);
+				axios.post(this.url + "ProfileAPI/updateBio", form)
+				.then((result) => {
+					alert("Bio Successfully Updated");
+					window.location.assign(this.url + "ProfileAPI/index");
+				})
 			}
 		},
 

@@ -18,9 +18,6 @@ class Profile_model extends CI_Model {
 		if($query->num_rows() > 0){
 			return $query->result();
 		}
-		else{
-			return "Error 404";
-		}
 	}
 
 	public function getUserQuestion($data)
@@ -31,9 +28,7 @@ class Profile_model extends CI_Model {
 		if($query->num_rows() > 0){
 			return $query->result();
 		}
-		else{
-			return "Error 404";
-		}
+	
 	}
 
 
@@ -45,14 +40,46 @@ class Profile_model extends CI_Model {
 		if($query->num_rows() > 0){
 			return $query->result();
 		}
-		else{
-			return "Error 404";
+	}
+
+	public function updateDescription($id , $data)
+	{
+		$this->db->where('user_id', $id);
+		$this->db->update('user_detail', $data);
+	}
+
+	public function updateBio($id , $data)
+	{
+		$this->db->where('user_id', $id);
+		$this->db->update('user_detail', $data);
+	}
+
+	public function deleteQuestion($id)
+	{
+		$data = array(
+			'question_id' => $id,
+		);
+
+		$this->db->where($data);
+		$query = $this->db->delete('question_tag');
+		if ($query) {
+			$this->db->where($data);
+			$query = $this->db->delete('question');
 		}
 	}
 
-	public function updateDescription($id)
+	public function deleteTag($id)
 	{
+		$data = array(
+			'tag_id' => $id,
+		);
 
+		$this->db->where($data);
+		$query = $this->db->delete('question_tag');
+		if ($query) {
+			$this->db->where($data);
+			$query = $this->db->delete('tag');
+		}
 	}
 
 }

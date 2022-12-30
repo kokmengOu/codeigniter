@@ -49,7 +49,11 @@ class ProfileAPI extends CI_Controller {
 
 	public function updateDescription()
 	{
-		$response = $this->Profile_model->updateDescription($this->session->userdata('id'));
+		$data = array(
+			'user_description' => $this->input->post('description'),
+		);
+
+		$response = $this->Profile_model->updateDescription( $this->session->userdata('id') , $data);
 		echo json_encode($response);
 		
 		redirect('ProfileAPI','refresh');
@@ -58,9 +62,26 @@ class ProfileAPI extends CI_Controller {
 
 	public function updateBio()
 	{
-		$response = $this->Profile_model->updateBio($this->session->userdata('id'));
-		echo json_encode($response);
+		$data = array(
+			'user_bio' => $this->input->post('bio'),
+		);
+		$response = $this->Profile_model->updateBio( $this->session->userdata('id') , $data);
+		redirect('ProfileAPI','refresh');
 		
+	}
+
+	public function deleteQuestion()
+	{
+		$url = $this->uri->segment(3);
+		$response = $this->Profile_model->deleteQuestion($url);
+		redirect('ProfileAPI','refresh');
+		
+	}
+
+	public function deleteTag()
+	{
+		$url = $this->uri->segment(3);
+		$response = $this->Profile_model->deleteTag($url);
 		redirect('ProfileAPI','refresh');
 		
 	}
