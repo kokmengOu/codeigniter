@@ -24,6 +24,7 @@ class TagAPI extends CI_Controller {
 	public function createTag()
 	{
 		$this->load->view('addTag');
+		$this->session->unset_userdata('tag_id');
 	}
 
 	public function AddTag()
@@ -50,12 +51,24 @@ class TagAPI extends CI_Controller {
 		echo json_encode($response);
 	}
 
-	public function eachTag()
+	public function vieweachTag(){
+		$this->load->view('vieweachtag');
+		$data = array('tag_id' => $this->uri->segment(3));
+		$this->session->set_userdata( $data );
+		
+	}
+
+	public function getsingleTag()
 	{
-		$response["EachTag"] = $this->Tag_model->EachTag($this->uri->segment(3));
+		$response["eachTags"] = $this->Tag_model->getsingleTag($this->session->userdata('tag_id'));
 		echo json_encode($response);
 	}
 
+	public function getQuestionTag()
+	{		
+		$response["questionTags"] = $this->Tag_model->getQuestionTag($this->session->userdata('tag_id'));
+		echo json_encode($response);
+	}
 
 
 }

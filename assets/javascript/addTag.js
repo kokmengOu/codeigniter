@@ -9,7 +9,8 @@ const app = createApp({
 			isreviewVisible : true,
 			isInvalid : '',
 			text_title: '',
-			text_content : ''
+			text_content : '',
+
         }
     },
 

@@ -189,54 +189,42 @@
         <div class="title-container" >{{title}}</div>
         <div class="content-container">
           <div class="inside-container">
-            <section class="tag-container">
-              <div class="relate_tag">Relate Tag</div> 
-              <div class="each_tag_container">
-                <div v-for="tag in tags" :key="tag.id">
-                  <button type="button" class="each_tag">{{tag.tag_title}}</button>
-                </div>
-              </div>
-            </section>
-            <section class="question-container">
-              <template  v-for="question in questions" :key="question.question_id">  <!--https://stackoverflow.com/questions/58424186/using-v-for-and-v-bindkey-->
-                <div class="each-question-section">
-                    <div class="userImg">{{question.img_id}}</div>
-                    <div class="username">{{question.user_FullName}}</div>
-                    <div class="content-time">{{question.question_published}}</div>
-                    <div class="question-title">{{question.question_title}}</div>
-                    <div class="question-content">{{question.question_content}}</div>
-                    <div class="question_tag_container">
-												<div class="question_tag" v-if="question.tag_one != '' || question.tag_one != null">
-                            <button>{{question.tag_one}}</button>
-                        </div>	
-												<div class="question_tag" v-if="question.tag_two != '' || question.tag_two != null ">
-                            <button>{{question.tag_two}}</button>
-                        </div>	
-												<div class="question_tag" v-if="question.tag_three != '' || question.tag_three != null ">
-                            <button>{{question.tag_three}}</button>
-                        </div>	
-												<div class="question_tag" v-if="question.tag_four != '' || question.tag_four != null ">
-                            <button>{{question.tag_four}}</button>
-                        </div>	
-												<div class="question_tag" v-if="question.tag_five != '' || question.tag_five != null  ">
-                            <button>{{question.tag_five}}</button>
-                        </div>	
-                    </div>
-                    <div class="question-upvote" @click.once="question.question_upvote++ , Taggle_upvote(question.question_id , question.question_upvote)">
-                      <div class="img">
-                        <img src="<?php echo base_url(); ?>assets/img/9055013_bx_upvote_icon.png" alt="" srcset="" width="30" height="30">
-                      </div>
-                      {{question.question_upvote}}
-                    </div>
-                    <div class="question-downvote" @click.once="question.question_downvote++ , Taggle_downvote(question.question_id ,question.question_downvote)">
-                      <div class="img">
-                        <img src="<?php echo base_url(); ?>assets/img/9054487_bx_downvote_icon.png" alt="" srcset="" width="30" height="30">
-                      </div>
-                      {{question.question_downvote}}
+
+		  		<div class="card mb-3" style="width: 95%;">
+                    <div class="card-body" v-for="eachTag in eachTags" :key="eachTag.tag_id">
+                        <h5 class="card-title fw-bold">{{eachTag.tag_title}}</h5>
+                        <h6 class="card-subtitle mb-2 text-muted fs-6">{{eachTag.tag_timestamp}}</h6>
+                        <p class="card-text ">{{eachTag.tag_content}}</p>
                     </div>
                 </div>
-        			</template>
-            </section>
+
+                <div class="card mb-3" style="width: 95%;" >
+                  <div class="card-body bg-white mb-1" v-for="questionsTag in questionTags" :key="questionsTag.question_id"> 
+                      <div class="row align-items-start">
+                          <div class="col-2">
+                              	<div class="d-flex justify-content-center align-items-center"  @click.once="question.question_upvote++ , Taggle_upvote(question.question_id , question.question_upvote)">
+									<img src="<?php echo base_url(); ?>assets/img/9055013_bx_upvote_icon.png" alt="" srcset="" width="30" height="30">
+								</div>
+								<div class="d-flex justify-content-center align-items-center">{{questionsTag.question_upvote}}</div>
+								<div class="d-flex justify-content-center align-items-center">{{questionsTag.question_downvote}}</div>
+								<div class="d-flex justify-content-center align-items-center"  @click.once="question.question_upvote++ , Taggle_upvote(question.question_id , question.question_upvote)">
+									<img src="<?php echo base_url(); ?>assets/img/9054487_bx_downvote_icon.png" alt="" srcset="" width="30" height="30">
+								</div>
+                          </div>
+                          <div class="col">
+                              <div class="row">
+                                  <h6 class="card-title mb-2 text-black">{{questionsTag.question_title}}</h6>
+                                  <p class="card-subtitle mb-2 text-muted">{{questionsTag.question_published}}</p>
+                              </div>
+                              <div class="row">
+                                  <p class="card-text">{{questionsTag.question_content}}</p>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+
+                </div>
+
           </div>
         </div>
     </div>

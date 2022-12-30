@@ -42,5 +42,31 @@ class Tag_model extends CI_Model {
 		}
 	}
 
+	public function getsingleTag($id)
+	{
+		$this->db->where('tag_id', $id);
+		$query = $this->db->get($this->table);
+		if($query->num_rows() > 0){
+			return $query->result();
+		}else{
+			return false;
+		}
+	}
+
+	public function getQuestionTag($id)
+	{
+		
+		$this->db->select(' question.question_id, question.question_title , question.question_upvote, question.question_published, question.question_downvote, question.question_content , question_tag.tag_id');    
+		$this->db->from('question_tag');
+		$this->db->join('question', 'question_tag.question_id = question.question_id');
+		$query = $this->db->get();
+
+		if($query->num_rows() > 0){
+			return $query->result();
+		}else{
+			return false;
+		}
+	}
+
 
 }

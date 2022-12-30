@@ -6,7 +6,8 @@ const app = createApp({
             url: "https://w1790671.users.ecs.westminster.ac.uk/demo/index.php/",
             title: 'Tag',
             tags :[],
-            
+			questionTags: [],
+			eachTags: [],
         }
     },
 
@@ -29,8 +30,9 @@ const app = createApp({
 		},
 
 		eachTag(id){
-			console.log(id);
-		}
+			window.location.assign(this.url + "TagAPI/vieweachTag/" + id )
+		},
+
 
     },
 })
