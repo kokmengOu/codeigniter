@@ -761,6 +761,38 @@ body{
 							width: 90%;
 					}
 
+					.VisibleEditOne{
+						position: absolute;
+						top: 50%;
+						left: 50%;
+						transform: translate(-50% , -50%);
+						min-width: 70%;
+						min-height: 50vh;
+						z-index: 1000;
+						background: #f3f3f3;
+					}
+					.VisibleEdittwo{
+						position: absolute;
+						top: 50%;
+						left: 50%;
+						transform: translate(-50% , -50%);
+						min-width: 70%;
+						min-height: 50vh;
+						z-index: 1000;
+						background: #f3f3f3;
+				}
+		
+				.danger-Description{
+						display: none;
+				}
+		
+				.danger-bio{
+						display: none;
+				}
+		
+				.is-invalid{
+						display: block;
+				}
 
 
 

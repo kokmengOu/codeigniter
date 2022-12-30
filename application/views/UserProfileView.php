@@ -227,7 +227,7 @@
                                                 <p class="text-uppercase fs-5 fw-bolder">Description</p>
                                             </div>
                                             <div class="col d-grid d-md-flex justify-content-md-end">
-                                                <button class="btn btn-outline-info" type="button" @click="updateDescription" >Edit</button>
+                                                <button class="btn btn-outline-info" type="button"  @click="editerDescription" >Edit</button>
                                             </div>
                                         </div>
                                         <div class="row container-xl">
@@ -240,7 +240,7 @@
                                                 <p class="text-uppercase fs-5 fw-bolder">Bio</p>
                                             </div>
                                             <div class="col d-grid d-md-flex justify-content-md-end">
-                                                <button class="btn btn-outline-info" type="button" @click="updateBio" >Edit</button>
+                                                <button class="btn btn-outline-info" type="button" @click="editerBio" >Edit</button>
                                             </div>
                                         </div>
                                         <div class="row container-xl">
@@ -313,6 +313,65 @@
 
 			</div>
         </div>
+
+
+        <div :class="{ 'VisibleEditOne' : isVisibleEditOne , 'danger-Description': EditOneDanger}">
+            <div class="container border border-2 rounded-3">
+                <div class="row">
+                    <div class="mt-3 d-grid d-md-flex justify-content-md-end">
+                        <button type="button" class="btn-close" aria-label="Close" @click="closeDescription"></button>
+                    </div>
+                </div>
+                <form class="needs-validation" novalidate>
+
+                    <div class="row">
+                        <div class="pb-3">
+                                <label for="validationTextarea" class="form-label fs-4 fw-bolder">Description</label>
+                                <textarea class="form-control" :class="[ is_invalid_Description ]" id="validationTextarea" placeholder="Enter Description" rows="15" v-model="Description_text" required></textarea>
+                                <div class="invalid-feedback">
+                                Please enter a Description in the textarea.
+                                </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="mb-3 d-grid d-md-flex justify-content-md-end">
+                                <button type="button" class="btn btn-outline-primary" @click="sendFormDescription()">Submit</button>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+
+        
+        <div :class="{ VisibleEdittwo : isVisibleEdittwo , 'danger-bio': EditTwoDanger }">
+            <div class="container border border-2 rounded-3">
+                <div class="row">
+                    <div class="mt-3 d-grid d-md-flex justify-content-md-end">
+                        <button type="button" class="btn-close" aria-label="Close" @click="closeBio"></button>
+                    </div>
+                </div>
+                <form class="needs-validation" novalidate>
+
+                    <div class="row">
+                        <div class="pb-3">
+                                <label for="validationTextarea" class="form-label fs-4 fw-bolder">Bio</label>
+                                <textarea class="form-control" :class="[ is_invalid_bio ]" id="validationTextarea" placeholder="Enter Description" rows="15" v-model="bio_text" required></textarea>
+                                <div class="invalid-feedback">
+                                Please enter a Bio in the textarea.
+                                </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="mb-3 d-grid d-md-flex justify-content-md-end">
+                                <button type="button" class="btn btn-outline-primary" @click="sendFormBio()">Submit</button>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+
     </div>
 
     <script src="<?php echo base_url() ;?>assets/javascript/profile.js"></script>
