@@ -186,24 +186,24 @@
         <div class="content-container">
 			<div class="inside-container">
 			
-			<div class="parent container">
-                    <div class="div1 position-relative">
+			<div class="parent_container container" >
+                    <div class="div1_container position-relative">
                         <div class="position-absolute top-50 start-50 translate-middle btn btn-sm btn-primary rounded-pill">
                             <img src="" alt="" srcset="" width="40" height="40">
                         </div>
                     </div>
-                    <div class="div2">
+                    <div class="div2_container">
                         <div class="username">
-                            name
+                            <?php echo $this->session->userdata('username') ?>
                         </div>
                         <div class="last_login">
-                            date
+						<?php echo $this->session->userdata('user_Lastlogin') ?>
                         </div>
                         <div class="last_logout">
-                            date
+						<?php echo $this->session->userdata('user_Lasrlogout') ?>
                         </div>
                     </div>
-                    <div class="div3">
+                    <div class="div3_container">
                         <ul class="nav nav-tabs" id="myTab" role="tablist">
                             <li class="nav-item" role="presentation">
                             <button class="nav-link active bg-transparent" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="true">Profile</button>
@@ -220,18 +220,18 @@
                         </ul>
                         <div class="tab-content container " id="myTabContent">
                             <div class="tab-pane fade show active" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-                                <div class="container profile_parent">
+                                <div class="container profile_parent"  v-for="Userdetail in Userdetails" :key="Userdetail.user_id" >
                                     <div class=" profile_child_one">
                                         <div class="row">
                                             <div class="col">
                                                 <p class="text-uppercase fs-5 fw-bolder">Description</p>
                                             </div>
                                             <div class="col d-grid d-md-flex justify-content-md-end">
-                                                <button class="btn btn-outline-info" type="button">Edit</button>
+                                                <button class="btn btn-outline-info" type="button" @click="updateDescription" >Edit</button>
                                             </div>
                                         </div>
                                         <div class="row container-xl">
-                                            <p class="fw-normal text-break">Normal weight text.</p>
+                                            <p class="fw-normal text-break">{{Userdetail.user_description}}</p>
                                         </div>
                                     </div>
                                     <div class=" profile_child_two">
@@ -240,11 +240,11 @@
                                                 <p class="text-uppercase fs-5 fw-bolder">Bio</p>
                                             </div>
                                             <div class="col d-grid d-md-flex justify-content-md-end">
-                                                <button class="btn btn-outline-info" type="button">Edit</button>
+                                                <button class="btn btn-outline-info" type="button" @click="updateBio" >Edit</button>
                                             </div>
                                         </div>
                                         <div class="row container-xl">
-                                            <p class="fw-normal text-break ">Normal weight text.</p>
+                                            <p class="fw-normal text-break ">{{Userdetail.user_bio}}</p>
                                         </div>
                                     </div>
                                     <div class=" profile_child_three border-start"> </div>
@@ -252,28 +252,28 @@
                             </div>
                             <div class="tab-pane fade" id="question" role="tabpanel" aria-labelledby="question-tab">
                                 <div class="container-xxl question_parent">
-                                    <div class="question_child">
+                                    <div class="question_child" v-for="question in questions" :key="question.question_id" >
                                         <div class="question_title">
 											<div class="row">
 													<div class="col">
-														<p class="col">title</p>
+														<p class="col">{{question.question_title}}</p>
 													</div>
 													<div class="col d-grid d-md-flex justify-content-md-end">
-														<button class="btn btn-outline-info" type="button">delete</button>
+														<button class="btn btn-outline-info" type="button" @click="deleteQuestion(question.question_id)">delete</button>
 													</div>
 												</div>
-											</div>
+										</div>
                                         <div class="question_content">
-                                            content
+										{{question.question_content}}
                                         </div>
                                         <div class="question_vote row">
                                             <div class="row">
                                                 <img src="" alt="img" srcset="">
-                                                upvote
+                                                {{question.question_upvote}}
                                             </div>
                                             <div class="row">
                                                 <img src="" alt="img">
-                                                down
+                                                {{question.question_downvote}}
                                             </div>
                                         </div>
                                     </div>
@@ -282,12 +282,13 @@
                             </div>
                             <div class="tab-pane fade" id="tag" role="tabpanel" aria-labelledby="tag-tab">
                                 <div class="container-xxl tag_parent d-flex flex-wrap gap-5">
-                                    <div class="card" style="width: 18rem;">
+                                    <div class="card" style="width: 18rem;" v-for="tag in tags" :key="tag.tag_id"  >
                                         <div class="card-body">
-                                        <h5 class="card-title">Card title</h5>
-                                        <h6 class="card-subtitle mb-2 text-muted">Card time</h6>
-                                        <p class="card-text overflow-hidden">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                                        <a href="#" class="card-link">Card link</a>
+                                        <h5 class="card-title">{{tag.tag_title}}</h5>
+                                        <h6 class="card-subtitle mb-2 text-muted">{{tag.tag_timestamp}}</h6>
+                                        <p class="card-text overflow-hidden">{{tag.tag_content}}</p>
+                                        <a href="#" class="card-link">Read More</a>
+										<button class="btn btn-outline-info" type="button" @click="deletetag(tag.tag_id)">delete</button>
                                         </div>
                                     </div>
                                 </div>

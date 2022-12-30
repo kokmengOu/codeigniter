@@ -4,9 +4,11 @@ const app = createApp({
     data() {
         return {
             url: "https://w1790671.users.ecs.westminster.ac.uk/demo/index.php/",
+			title: 'PROFILE',
 			questions: [],
 			tags: [],
-			favorite: []
+			favorite: [],
+			Userdetails: []
 		}
     },
 
@@ -20,12 +22,10 @@ const app = createApp({
     methods: {
 
 		showUserDetail(){
-			axios.get(this.url + "ProfileAPI/getQuestion")
+			axios.get(this.url + "ProfileAPI/getProfileDetail")
 			.then((result) => {
-				result.data.questions;
-				console.log(result.data.questions);
-				this.questions = result.data.questions.slice();
-				console.log(this.questions.question_id == result.data.questions.question_id);
+				result.data.Userdetails;
+				this.Userdetails = result.data.Userdetails.slice();
 			}).catch((err) => {
 				console.log(err);
 			});
@@ -61,7 +61,43 @@ const app = createApp({
 			}).catch((err) => {
 				console.log(err);
 			});
+		},
+
+		updateDescription(){
+			axois.post(this.url + "ProfileAPI/updateDescription")
+			.then((result) => {
+				alert("Description Successfully Updated")
+			}).catch((err) => {
+				alert("error 404");
+				console.log(err);
+			});
+		},
+
+		updateBio(){
+			axois.post(this.url + "ProfileAPI/updateBio")
+			.then((result) => {
+				alert("Description Successfully Updated")
+			}).catch((err) => {
+				alert("error 404");
+				console.log(err);
+			});
+		},
+
+		deleteQuestion(id)
+		{
+			console.log(id);
+		},
+
+		deletetag(id)
+		{
+
+		},
+
+		editUser()
+		{
+
 		}
+
 
     },
 

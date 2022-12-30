@@ -568,6 +568,7 @@ body{
   .content-container .inside-container{
     position: relative;
     top: 3rem;
+		left: 2rem;
   }
 
   .content-container .inputVisible{
@@ -697,7 +698,7 @@ body{
       box-shadow: var(--box-shadow--neumophism);
     }
 
-		.parent {
+		.parent_container {
 			display: grid;
 			grid-template-columns: 1fr 4fr;
 			grid-template-rows: 1fr 3fr;
@@ -705,9 +706,9 @@ body{
 			grid-row-gap: 0px;
 			}
 
-			.div1 { grid-area: 1 / 1 / 2 / 2; }
-			.div2 { grid-area: 1 / 2 / 2 / 3; }
-			.div3 { grid-area: 2 / 1 / 3 / 3; }
+			.div1_container { grid-area: 1 / 1 / 2 / 2; }
+			.div2_container { grid-area: 1 / 2 / 2 / 3; }
+			.div3_container { grid-area: 2 / 1 / 3 / 3; }
 
 			.profile_parent {
 					display: grid;
@@ -747,6 +748,7 @@ body{
 							box-shadow: inset 9px 9px 18px #cfceca,
 													inset -9px -9px 18px #ffffff;
 							padding: 2rem;
+							margin: 1rem;
 					}
 
 					.question_title { grid-area: 1 / 1 / 2 / 3; }

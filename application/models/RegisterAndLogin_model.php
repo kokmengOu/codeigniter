@@ -49,6 +49,10 @@ class RegisterAndLogin_model extends CI_Model {
 					$data = array(
 						'username' => $row->user_FullName,
 						'id'=> $row->user_id,
+						'user_description'=> $row->user_description,
+						'user_Lastlogin'=> $row->user_Lastlogin,
+						'user_Lasrlogout'=> $row->user_Lasrlogout,
+						'user_bio'=> $row->user_bio,
 						'loggin_in' => true
 					);
 					$this->session->set_userdata($data);

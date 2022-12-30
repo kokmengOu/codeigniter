@@ -4,17 +4,18 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 require APPPATH . '/libraries/RestController.php';
 use chriskacerguis\RestServer\RestController;
 
-class QuestionAPI extends CI_Controller {
+class ProfileAPI extends CI_Controller {
     
     public function __construct()
     {
 		parent::__construct();
+		if(!$this->session->userdata('id'))
+		{
+		 redirect('HomeAPI/index');
+		}
 		$this->load->model('Profile_model');
 
-		if (!isset($_SESSION['loggin_in'])) {
-			
-			redirect('UserAPI/index','refresh');
-		}
+
     }
 
 	public function index()
@@ -24,13 +25,13 @@ class QuestionAPI extends CI_Controller {
 
 	public function getProfileDetail()
 	{
-		$response["questions"] = $this->Question_model->getUserDetail($this->session->userdata('id'));
+		$response["Userdetails"] = $this->Profile_model->getUserDetail($this->session->userdata('id'));
 		echo json_encode($response);
 	}
 
 	public function getQuestion()
 	{
-		$response["questions"] = $this->Question_model->getUserQuestion($this->session->userdata('id'));
+		$response["questions"] = $this->Profile_model->getUserQuestion($this->session->userdata('id'));
 		echo json_encode($response);
 
 	}
@@ -42,8 +43,26 @@ class QuestionAPI extends CI_Controller {
 
 	public function getTag()
 	{
-		$response["tags"] = $this->Question_model->getUserTag($this->session->userdata('id'));
+		$response["tags"] = $this->Profile_model->getUserTag($this->session->userdata('id'));
 		echo json_encode($response);
+	}
+
+	public function updateDescription()
+	{
+		$response = $this->Profile_model->updateDescription($this->session->userdata('id'));
+		echo json_encode($response);
+		
+		redirect('ProfileAPI','refresh');
+		
+	}
+
+	public function updateBio()
+	{
+		$response = $this->Profile_model->updateBio($this->session->userdata('id'));
+		echo json_encode($response);
+		
+		redirect('ProfileAPI','refresh');
+		
 	}
 
 }
