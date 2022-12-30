@@ -190,23 +190,122 @@
         <div class="content-container">
           <div class="inside-container">
 
-		  	<div class="container-xxl tag_parent d-flex flex-wrap gap-5">
+						<div class="container-xxl tag_parent d-flex flex-wrap gap-5">
 
-				<div class="card Card_style" style="width: 18rem;"  v-for="tag in tags" :key="tag.tag_id">
-					<div class="card-body">
-					<h5 class="card-title">{{tag.tag_title}}</h5>
-					<h6 class="card-subtitle mb-2 text-muted">{{tag.tag_timestamp}}</h6>
-					<p class="card-text overflow-hidden">{{tag.tag_content}}</p>
-					<a class="card-link" @click="eachTag(tag.tag_id)">Read More</a>
-					</div>
-				</div>
+							<div class="card Card_style" style="width: 18rem;"  v-for="user in users" :key="user.user_id">
+								<div class="card-body">
+								<h5 class="card-title">{{user.user_FullName}}</h5>
+								<h6 class="card-subtitle mb-2 text-muted">{{user.user_Lasrlogout}}</h6>
+								<p class="card-text overflow-hidden">{{user.user_description}}</p>
+								<a class="card-link" @click="eachUser(user.user_id)">Read More</a>
+								</div>
+							</div>
 
-			</div>
+						</div>
 
           </div>
         </div>
+
+				<div :class="{ VisibleEachUser : isVisibleEachUser , 'danger-eachUser': EditisVisibleEachUser }" style="z-index: 1000;">
+            <div class="container card border border-2 rounded-3 " style="height: 100vh;">
+                <div class="row ">
+                    <div class="mt-3 d-grid d-md-flex justify-content-md-end">
+                        <button type="button" class="btn-close" aria-label="Close" @click="closeBio"></button>
+                    </div>
+                </div>
+
+                <p class="fw-bold" v-for="Eachuser in Eachusers" :key="Eachuser.user_id">
+                      {{Eachuser.user_FullName}}
+								</p>
+                
+                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                    <li class="nav-item" role="presentation">
+                      <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">Home</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                      <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">Profile</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                      <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact" type="button" role="tab" aria-controls="contact" aria-selected="false">Contact</button>
+                    </li>
+                  </ul>
+                  <div class="tab-content" id="myTabContent">
+                    <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+
+																	<div class="container profile_parent"  v-for="Eachuser in Eachusers" :key="Eachuser.user_id" >
+                                    <div class=" profile_child_one">
+                                        <div class="row">
+                                            <div class="col">
+                                                <p class="text-uppercase fs-5 fw-bolder">Description</p>
+                                            </div>
+                                        </div>
+                                        <div class="row container-xl">
+                                            <p class="fw-normal text-break">{{Eachuser.user_description}}</p>
+                                        </div>
+                                    </div>
+                                    <div class=" profile_child_two">
+                                        <div class="row">
+                                            <div class="col">
+                                                <p class="text-uppercase fs-5 fw-bolder">Bio</p>
+                                            </div>
+                                        </div>
+                                        <div class="row container-xl">
+                                            <p class="fw-normal text-break ">{{Eachuser.user_bio}}</p>
+                                        </div>
+                                    </div>
+                                    <div class=" profile_child_three border-start"> </div>
+                                </div>
+
+                    </div>
+                    <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+
+													<div class="container-xxl question_parent">
+																					<div class="question_child" v-for="question in questions" :key="question.question_id" >
+																							<div class="question_title">
+																								<div class="row">
+																										<div class="col">
+																											<p class="col">{{question.question_title}}</p>
+																										</div>
+																								</div>
+																							</div>
+																							<div class="question_content">
+																												{{question.question_content}}
+																							</div>
+																							<div class="question_vote row">
+																									<div class="row">
+																											<img src="" alt="img" srcset="">
+																											{{question.question_upvote}}
+																									</div>
+																									<div class="row">
+																											<img src="" alt="img">
+																											{{question.question_downvote}}
+																									</div>
+																							</div>
+																					</div>
+									
+													</div>
+
+                    </div>
+                    <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+                        
+																<div class="container-xxl tag_parent d-flex flex-wrap gap-5">
+                                    <div class="card" style="width: 18rem;" v-for="tag in tags" :key="tag.tag_id"  >
+                                        <div class="card-body">
+                                        <h5 class="card-title">{{tag.tag_title}}</h5>
+                                        <h6 class="card-subtitle mb-2 text-muted">{{tag.tag_timestamp}}</h6>
+                                        <p class="card-text overflow-hidden">{{tag.tag_content}}</p>
+                                        <a href="#" class="card-link">Read More</a>
+                                        </div>
+                                    </div>
+                                </div>
+
+                    </div>
+                  </div>
+            </div>
+        </div>
+
     </div>
 
-    <script src="<?php echo base_url() ;?>assets/javascript/Tag.js"></script>
+    <script src="<?php echo base_url() ;?>assets/javascript/Otheruser.js"></script>
 </body>
 </html>

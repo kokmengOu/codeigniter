@@ -10,53 +10,44 @@ class FindOtherUser_model extends CI_Model {
         $this->load->database();
     }
 
-	public function is_email_available($data)
+	public function getOtherUser()
 	{
-		$this->db->where('user_Email', $data);
+		$this->db->select('user_id , user_FullName, user_Email, user_Lastlogin, user_Lasrlogout, user_description, user_bio');
+		
 		$query = $this->db->get($this->table);
-
-		if($query->num_rows() > 0){
-			return true;
+		if ($query->num_rows() > 0) {
+			return $query->result();
 		}
-		else{
-			return false;
-		}
-
+		
 	}
 
-	public function insert($data)
+	public function eachUser($id)
 	{
-
-		if($this->db->insert('user_detail',$data))
-		{    
-			return 'Data is inserted successfully';
-		}
-		  else
-		{
-			return "Error has occured";
-		}
-	}
-
-
-	public function checkUser($email, $password)
-	{
-		$this->db->where('user_Email', $email);
+		$this->db->select('user_id , user_FullName, user_Email, user_Lastlogin, user_Lasrlogout, user_description, user_bio');
+		$this->db->where('user_id', $id);
 		$query = $this->db->get($this->table);
-
-		if($query->num_rows() > 0){
-			foreach ($query->result() as $row ) {
-				if(password_verify($password,$row->user_passwordHash)){
-					$this->session->userdata('id',$row->user_id );
-					return true;
-				}else{
-					return false;
-				}
-			}
+		if ($query->num_rows() > 0) {
+			return $query->result();
 		}
-		else{
-			return false;
-		}
-
 	}
+
+	public function eachUserquestion($id)
+	{
+		$this->db->where('user_id', $id);
+		$query = $this->db->get('question');
+		if ($query->num_rows() > 0) {
+			return $query->result();
+		}
+	}
+
+	public function eachUsertag($id)
+	{
+		$this->db->where('user_id', $id);
+		$query = $this->db->get('tag');
+		if ($query->num_rows() > 0) {
+			return $query->result();
+		}
+	}
+
 
 }

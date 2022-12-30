@@ -802,6 +802,20 @@ a{
 						display: block;
 				}
 
+				.VisibleEachUser{
+					position: absolute;
+					top: 50%;
+					left: 50%;
+					transform: translate(-50% , -50%);
+					min-width: 70%;
+					z-index: 1000;
+					overflow: auto;
+				}
+	
+				.danger-eachUser{
+						display: none;
+				}
+
 
 
 
