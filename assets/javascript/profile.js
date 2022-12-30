@@ -8,7 +8,15 @@ const app = createApp({
 			questions: [],
 			tags: [],
 			favorite: [],
-			Userdetails: []
+			Userdetails: [],
+			isVisibleEditOne : false,
+            EditOneDanger: true,
+			isVisibleEdittwo : false,
+            EditTwoDanger: true,
+            Description_text : '',
+            bio_text: '',
+            is_invalid_Description : '',
+            is_invalid_bio : '',
 		}
     },
 
@@ -93,10 +101,46 @@ const app = createApp({
 
 		},
 
-		editUser()
-		{
+		sendFormDescription(){
+			if(this.Description_text == '')
+			{
+                this.is_invalid_Description = 'is-invalid';
+			}else{
+                this.is_invalid_Description = '';
+			}
+		},
 
-		}
+        sendFormBio(){
+			if(this.bio_text == '')
+			{
+                this.is_invalid_bio = 'is-invalid';
+			}else{
+                this.is_invalid_bio = '';
+			}
+		},
+
+        editerDescription(){
+            this.isVisibleEditOne = !this.isVisibleEditOne;
+            this.EditOneDanger=  !this.EditOneDanger;
+        },
+
+        editerBio(){
+            this.isVisibleEdittwo = !this.isVisibleEdittwo;
+            this.EditTwoDanger=  !this.EditTwoDanger;
+        },
+
+        closeDescription(){
+            this.Description_text='';
+            this.isVisibleEditOne = !this.isVisibleEditOne;
+            this.EditOneDanger=  !this.EditOneDanger;
+        },
+
+        closeBio(){
+            this.bio_text='';
+            this.isVisibleEdittwo = !this.isVisibleEdittwo;
+            this.EditTwoDanger=  !this.EditTwoDanger;
+        }
+
 
 
     },
