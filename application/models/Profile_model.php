@@ -76,10 +76,9 @@ class Profile_model extends CI_Model {
 
 		$this->db->where($data);
 		$query = $this->db->delete('question_tag');
-		if ($query) {
-			$this->db->where($data);
-			$query = $this->db->delete('tag');
-		}
+
+		$this->db->where($data);
+		$query = $this->db->delete('tag');
 	}
 
 }

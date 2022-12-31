@@ -75,7 +75,6 @@ class ProfileAPI extends CI_Controller {
 		$url = $this->uri->segment(3);
 		$response = $this->Profile_model->deleteQuestion($url);
 		redirect('ProfileAPI','refresh');
-		
 	}
 
 	public function deleteTag()

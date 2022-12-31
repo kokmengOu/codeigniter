@@ -56,4 +56,17 @@ class Question_model extends CI_Model {
 			$this->db->where('question_id', $id);
 			$this->db->update('question');
 	}
+
+	public function getSingleQuestion($data)
+	{
+		$this->db->where('question_id', $data);
+		$query = $this->db->get($this->table);
+		if($query->num_rows() > 0){
+			return $query->result();
+		}else{
+			return false;
+		}
+	}
+
+	
 }

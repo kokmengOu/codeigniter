@@ -206,21 +206,6 @@
                     <div class="question-title">{{question.question_title}}</div>
                     <div class="question-content">{{question.question_content}}</div>
                     <div class="question_tag_container">
-												<div class="question_tag" v-if="question.tag_one != '' || question.tag_one != null">
-                            <button>{{question.tag_one}}</button>
-                        </div>	
-												<div class="question_tag" v-if="question.tag_two != '' || question.tag_two != null ">
-                            <button>{{question.tag_two}}</button>
-                        </div>	
-												<div class="question_tag" v-if="question.tag_three != '' || question.tag_three != null ">
-                            <button>{{question.tag_three}}</button>
-                        </div>	
-												<div class="question_tag" v-if="question.tag_four != '' || question.tag_four != null ">
-                            <button>{{question.tag_four}}</button>
-                        </div>	
-												<div class="question_tag" v-if="question.tag_five != '' || question.tag_five != null  ">
-                            <button>{{question.tag_five}}</button>
-                        </div>	
                     </div>
                     <div class="question-upvote" @click.once="question.question_upvote++ , Taggle_upvote(question.question_id , question.question_upvote)">
                       <div class="img">
