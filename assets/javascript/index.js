@@ -32,6 +32,7 @@ const app = createApp({
 
             tags :[],
 			search_text:'',
+			searchQuestions:[],
             
         }
     },
@@ -40,9 +41,23 @@ const app = createApp({
 		this.showQuestion();
 		this.showQuestionTag();
 		this.showTag();
+		this.getSearchQuestion();
 	},
 
     methods: {
+
+		
+		getSearchQuestion(){
+			axios.get(this.url + "QuestionAPI/getQuestion")
+			.then((result) => {
+				result.data.searchQuestion;
+				console.log(result.data.searchQuestion);
+				this.searchQuestions = result.data.searchQuestion.slice();
+				console.log(this.searchQuestions.question_id == result.data.searchQuestion.question_id);
+			}).catch((err) => {
+				console.log(err);
+			});
+		},
 
 		showQuestion(){
 			axios.get(this.url + "HomeAPI/getQuestion")

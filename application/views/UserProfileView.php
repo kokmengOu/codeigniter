@@ -108,8 +108,8 @@
                 <div role="search" class="sbx-custom__wrapper">
 				<input list="datalistOptions" type="search" name="search" placeholder="Search question" autocomplete="off" required="required" class="sbx-custom__input" @:keyup.enter="onEnter" v-model="search_text">
 									<datalist id="datalistOptions">
-											<div v-for="question in questions" :key="question.question_id">
-														<option :value="question.question_title">
+											<div v-for="searchQuestion in searchQuestions" :key="searchQuestion.question_id">
+														<option :value="searchQuestion.question_title">
 											</div>
 									</datalist>
                   <button type="submit" title="Submit your search query." class="sbx-custom__submit">

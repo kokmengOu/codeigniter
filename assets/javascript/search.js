@@ -6,12 +6,14 @@ const app = createApp({
             url: "https://w1790671.users.ecs.westminster.ac.uk/demo/index.php/",
             title: 'Question',
             questions :[],
+			searchQuestions : [],
 			search_text : '',
         }
     },
 
 	created() {
 		this.showQuestion();
+		this.getSearchQuestion();
 	},
 
     methods: {
@@ -23,6 +25,18 @@ const app = createApp({
 				console.log(result.data.questions);
 				this.questions = result.data.questions.slice();
 				console.log(this.questions.question_id == result.data.questions.question_id);
+			}).catch((err) => {
+				console.log(err);
+			});
+		},
+
+		getSearchQuestion(){
+			axios.get(this.url + "QuestionAPI/getQuestion")
+			.then((result) => {
+				result.data.searchQuestion;
+				console.log(result.data.searchQuestion);
+				this.searchQuestions = result.data.searchQuestion.slice();
+				console.log(this.searchQuestions.question_id == result.data.searchQuestion.question_id);
 			}).catch((err) => {
 				console.log(err);
 			});

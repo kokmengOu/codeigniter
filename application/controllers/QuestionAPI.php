@@ -196,7 +196,7 @@ class QuestionAPI extends CI_Controller {
 			'question_title' => $this->session->userdata('question_title'), 
 		);
 		
-		$response['search'] = $this->Question_model->seachQuestion($data); // return data
+		$response['searchQuestion'] = $this->Question_model->seachQuestion($data); // return data
 
 		echo json_encode($response);
 	}

@@ -7,6 +7,7 @@ const app = createApp({
             title: 'Question',
             questions :[],
 			search_text : '',
+			searchQuestions: [],
         }
     },
 
@@ -22,6 +23,7 @@ const app = createApp({
 				result.data.questions;
 				console.log(result.data.questions);
 				this.questions = result.data.questions.slice();
+				this.searchQuestions = result.data.questions.slice();
 				console.log(this.questions.question_id == result.data.questions.question_id);
 			}).catch((err) => {
 				console.log(err);

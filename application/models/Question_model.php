@@ -126,7 +126,7 @@ class Question_model extends CI_Model {
 	public function seachQuestion($data)
 	{
 		
-		$this->db->where('question_title', $data);
+		$this->db->where($data);
 		$query = $this->db->get($this->table);
 		if($query->num_rows() > 0){
 			return $query->result();	

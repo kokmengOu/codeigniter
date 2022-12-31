@@ -17,15 +17,30 @@ const app = createApp({
 			value_four: '',
 			value_five: '',
 			search_text:'',
+			searchQuestions:[],
 
         }
     },
 
 	created() {
 		this.getTag();
+		this.getSearchQuestion();
 	},
 
     methods: {
+
+		
+		getSearchQuestion(){
+			axios.get(this.url + "QuestionAPI/getQuestion")
+			.then((result) => {
+				result.data.searchQuestion;
+				console.log(result.data.searchQuestion);
+				this.searchQuestions = result.data.searchQuestion.slice();
+				console.log(this.searchQuestions.question_id == result.data.searchQuestion.question_id);
+			}).catch((err) => {
+				console.log(err);
+			});
+		},
 
 		sendForm(){
 			if(this.text_title != '' || this.text_content != '')
