@@ -19,7 +19,8 @@ class QuestionAPI extends CI_Controller {
 	public function index()
 	{
 		$this->load->view('listquestion');
-		$this->session->unset_userdata('question_id');
+		$this->session->unset_userdata('question_id'); //unset everypage
+		$this->session->unset_userdata('question_title'); // unset everypage
 	}
 
 	public function eachQuestion() // view page
@@ -29,9 +30,48 @@ class QuestionAPI extends CI_Controller {
 		$this->session->set_userdata( $data );
 	}
 
+	public function viewaddQuestion()
+	{
+		$this->load->view('addQuestion');
+		
+	}
+
 	public function addQuestion()
 	{
-		//later
+
+		$data  = array(
+			'user_id' => $this->input->post('userID'), 
+			'question_title' => $this->input->post('questionTitle'), 
+			'question_content' => $this->input->post('questionContent'), 
+			'question_published' => date('Y-m-d H:i:s'),
+			'question_upvote' => 0, 
+			'question_downvote' => 0, 
+		);
+		
+		$response = $this->Question_model->addQuestion($data ,  $this->input->post('questionTitle'));
+
+			$valueOne = $this->input->post('valueOne');
+			if($valueOne != '' || $valueOne != null){
+				$this->Question_model->addValueTag($this->input->post('userID'), $valueOne , $response);
+			}
+			$valueTwo = $this->input->post('valueTwo');
+			if($valueTwo != '' || $valueTwo != null){
+				$this->Question_model->addValueTag( $this->input->post('userID'), $valueTwo , $response);
+			}
+			$valueThree = $this->input->post('valueThree');
+			if($valueThree != '' || $valueThree != null){
+				$this->Question_model->addValueTag( $this->input->post('userID'), $valueThree , $response);
+			}
+			$valueFour = $this->input->post('valueFour');
+			if($valueFour != '' || $valueFour != null){
+				$this->Question_model->addValueTag( $this->input->post('userID'), $valueFour , $response);
+			}
+			$valueFive = $this->input->post('valueFive');
+			if($valueFive != '' || $valueFive != null){
+				$this->Question_model->addValueTag( $this->input->post('userID'), $valueFive , $response);
+			}
+
+		redirect('eachQuestion','refresh');
 	}
 
 	public function addAnswer()
@@ -140,6 +180,25 @@ class QuestionAPI extends CI_Controller {
 		$url = $this->uri->segment(3); // comment id
 		$response = $this->Answer_model->deleteComment($url);
 		redirect('ProfileAPI','refresh');
+	}
+
+	public function viewSearch()
+	{
+		$this->load->view('viewSearch');
+		$data = array('question_title' => $this->uri->segment(3));
+		$this->session->set_userdata( $data );
+	}
+
+	public function seachQuestion()
+	{
+
+		$data = array(
+			'question_title' => $this->session->userdata('question_title'), 
+		);
+		
+		$response['search'] = $this->Question_model->seachQuestion($data); // return data
+
+		echo json_encode($response);
 	}
 
 }

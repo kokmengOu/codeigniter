@@ -189,19 +189,85 @@
             <div class="container a-container" id="a-container">
                 <form class="form" id="a-form" method="" action="">
                     <div class="mb-3">
-                        <label for="validationCustom03" class="form-label"><h5>TAG TITLE</h5></label>
+                        <label for="validationCustom03" class="form-label"><h5>Question TITLE</h5></label>
                         <input type="text" class="form-control" :class="[isInvalid]" id="validationCustom03" placeholder="Enter your title" name="title" v-model="text_title" required>
                         <div class="invalid-feedback">
                           Please provide a valid Title.
                         </div>
                     </div>
+										<div class="mb-3">
+                        <label for="formFileSm" class="form-label">Image</label>
+                        <input class="form-control form-control-sm" id="formFileSm" type="file"  >
+                    </div>
                     <div class="mb-3">
-                      <label for="validationTextarea" class="form-label"><h5>TAG CONTENT</h5></label>
+                      <label for="validationTextarea" class="form-label"><h5>Question CONTENT</h5></label>
                       <textarea class="form-control" :class="[isInvalid]" id="validationTextarea" placeholder="Required example textarea" @:key="checkText()"  rows="10" v-model="text_content" required ></textarea>
                       <div class="invalid-feedback">
                         Please enter a content in the textarea.
                       </div>
-                    </div>
+										</div>
+										<div class="mb-3">
+											<div class="container">
+												<div class="row">
+													<div class="col">
+							
+														<div class="mb-3">
+																<input class="form-control" list="datalistOptions" id="exampleDataList" placeholder="Type to search..." v-model="value_one">
+																<datalist id="datalistOptions">
+																	<div v-for="tag in tags" :key="tag.tag_id">
+																	<option :value="tag.tag_title">
+																	</div>
+																</datalist>
+														</div>
+													</div>
+													<div class="col">
+
+														<div class="mb-3">
+																<input class="form-control" list="datalistOptions" id="exampleDataList" placeholder="Type to search..." v-model="value_two">
+																<datalist id="datalistOptions">
+																	<div v-for="tag in tags" :key="tag.tag_id">
+																		<option :value="tag.tag_title">
+																	</div>
+																</datalist>
+															</div>
+													</div>
+												</div>
+												<div class="row">
+													<div class="col">
+
+														<div class="mb-3">
+																<input class="form-control" list="datalistOptions" id="exampleDataList" placeholder="Type to search..." v-model="value_three">
+																<datalist id="datalistOptions">
+																	<div v-for="tag in tags" :key="tag.tag_id">
+																		<option :value="tag.tag_id">
+																	</div>
+																</datalist>
+															</div>
+													</div>
+													<div class="col">
+
+														<div class="mb-3">
+																<input class="form-control" list="datalistOptions" id="exampleDataList" placeholder="Type to search..." v-model="value_four">
+																<datalist id="datalistOptions">
+																	<div v-for="tag in tags" :key="tag.tag_id">
+																	<option :value="tag.tag_title">
+																	</div>
+																</datalist>
+															</div>
+													</div>
+													<div class="col">
+														<div class="mb-3">
+																<input class="form-control" list="datalistOptions" id="exampleDataList" placeholder="Type to search..." v-model="value_five">
+																<datalist id="datalistOptions">
+																	<div v-for="tag in tags" :key="tag.tag_id">
+																	<option :value="tag.tag_title">
+																	</div>
+																</datalist>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
                     <div class="col-auto">
                         <button class="btn btn-primary" type="button" @click="sendForm()">Next</button>
                     </div>
@@ -210,25 +276,40 @@
           </div>
           <div class="inside-container min-wv-100 " :class="{ reviewVisible : isreviewVisible }">
             <div class="container a-container" id="a-container">
-                    <div class="mb-3">
-                        <div><h5>TAG Review</h5></div>
-                        <div class="container-sm bg-white border border-secondary rounded">{{text_title}}</div>
+
+										<p class="fw-bold">Title</p>
+												<div class="card-body">
+														{{text_title}}
+												</div>
+										<p class="fw-bold">Image</p>
+												<div class="card-body">
+												This is some text within a card body.
+											</div>
+										<p class="fw-bold">content</p>
+												<div class="card-body">
+												{{text_content}}
+											</div>
+										<p class="fw-bold">Tag</p>
+                    <div class="col ">
+															<button v-if="value_one != '' " type="button" class="btn btn-outline-dark m-1" disabled>{{value_one}}</button>
+															<button v-if="value_two != '' " type="button" class="btn btn-outline-dark m-1" disabled>{{value_two}}</button>
+															<button v-if="value_three != '' " type="button" class="btn btn-outline-dark m-1" disabled>{{value_three}}</button>
+															<button v-if="value_four != '' " type="button" class="btn btn-outline-dark m-1" disabled>{{value_four}}</button>
+															<button v-if="value_five != '' " type="button" class="btn btn-outline-dark m-1" disabled>{{value_five}}</button>
                     </div>
-                    <div class="mb-3">
-                        <div><h5>TAG Review</h5></div>
-                        <div class="container-lg bg-white border border-secondary rounded">{{text_content}}</div>
-                    </div>
-                    <div class="col-auto">
+										<div class="col-auto">
                       <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                         <button class="btn btn-dark me-md-2" type="button" @click="sendForm()">Go back</button>
-                        <button class="btn btn-primary" type="submit" @click="submitForm()">Submit</button>
+                        <button class="btn btn-primary" type="submit" @click="submitForm(<?php echo $this->session->userdata('id')?>)">Submit</button>
                       </div>
                     </div>
+
+
             </div>
           </div>
         </div>
   	</div>	
 
-    <script src="<?php echo base_url() ;?>assets/javascript/index.js"></script>
+    <script src="<?php echo base_url() ;?>assets/javascript/addQuestion.js"></script>
 </body>
 </html>

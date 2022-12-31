@@ -3,91 +3,72 @@ const { createApp } = Vue
 const app = createApp({
     data() {
         return {
-            url: "https://w1790671.users.ecs.westminster.ac.uk/w1790671/index.php/",
-            Title_message : null,
-			Content_message : null,
-            is_disable : false,
-			class_name : '',
-			dynamic_class : true,
-            title : 'title',
-            content : 'content',
-            question: {
-                title: null,
-                content : null,
-            },
-			tag :{
+            url: "https://w1790671.users.ecs.westminster.ac.uk/demo/index.php/",
+			title : 'ADD TAG',
+			isinputVisible : false,
+			isreviewVisible : true,
+			tags : [],
+			isInvalid : '',
+			text_title: '',
+			text_content : '',
+			value_one: '',
+			value_two: '',
+			value_three: '',
+			value_four: '',
+			value_five: '',
 
-			},
-			img : {
-
-			},
         }
     },
 
+	created() {
+		this.getTag();
+	},
+
     methods: {
 
-        checkTitle(){
-			if(this.question.title.length > 2 )
+		sendForm(){
+			if(this.text_title != '' || this.text_content != '')
 			{
-				this.dynamic_class = true;
-				this.Title_message = 'Plea';
-				this.is_disable = false;
-				this.class_name = 'success'
-				return true;
-			}
-			else{
-				this.dynamic_class = true;
-				this.Content_message = 'This email is already registered';
-				this.is_disable = true;
-				this.class_name = 'danger';
-				return false;
-			}
-        },
-
-		checkContent(){
-			if(this.question.title.length > 2 )
-			{
-				this.dynamic_class = true;
-				this.Content_message = 'Plea';
-				this.is_disable = false;
-				this.class_name = 'success'
-				return true;
-			}
-			else{
-				this.dynamic_class = true;
-				this.message = 'This email is already registered';
-				this.is_disable = true;
-				this.class_name = 'danger';
-				return false;
+					this.isinputVisible = !this.isinputVisible;
+					this.isreviewVisible = !this.isreviewVisible;
+			}else{
+				this.isInvalid = 'is-invalid';
 			}
 		},
 
-		AddQuestion(){
-			if (this.checkTitle() == true && this.checkContent() == true ) {
-				this.dynamic_class = true;
-				this.message = 'Plea';
-				this.is_disable = false;
-				this.class_name = 'success'
+		submitForm(id){
+			console.log(id);
+			const form = new FormData();
+			form.append("userID", id);
+			form.append("questionTitle" , this.text_title);
+			form.append("questionContent", this.text_content);
+			form.append("valueOne", this.value_one);
+			form.append("valueTwo", this.value_two);
+			form.append("valueThree", this.value_three);
+			form.append("valueFour", this.value_four);
+			form.append("valueFive", this.value_five);
+			axios.post(this.url + "QuestionAPI/addQuestion" , form)
+			.then((result) => {
+				alert("You have been successfully Add Question")
+				window.location.assign(this.url + "HomeAPI/index");
+			}).catch((err) => {
+				console.log(err);
+			});
+		},
 
-				const form = new FormData();
-				form.append("title" , this.question.title);
-				form.append("content", this.question.content);
-				axios.post(this.url + "AddAPI/Add_question", form)
-				.then((result) => {
-					if(result.data.AddQuestion != "NO"){
-						console.log(result.data.is_available);
-					}
-				}).catch((err) => {
-					console.error(err);
-				});
+		getTag(){
+			axios.get(this.url + "TagAPI/getTag")
+			.then((result) => {
+				result.data.tags;
+				console.log(result.data.tags);
+				this.tags = result.data.tags.slice();
+				console.log(this.tags);
+			}).catch((err) => {
+				console.log(err);
+			});
+		},
 
-			} else {
-				this.dynamic_class = true;
-				this.message = 'This email is already registered';
-				this.is_disable = true;
-				this.class_name = 'danger';
-			}
-		}
+
     },
 
 })

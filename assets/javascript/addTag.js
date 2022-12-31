@@ -40,7 +40,7 @@ const app = createApp({
 				console.log(err);
 			});
 		}
-    },
+   	 },
 
 })
 app.mount('#app')

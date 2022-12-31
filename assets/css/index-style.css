@@ -644,18 +644,17 @@ a{
   } 
 
   .each-question-section ,.each-answer{
-    margin: 3rem 2rem 1.5rem 2rem;
-    padding: 1.5rem;
+    padding: 1rem;
     background: #f6f5f0;
     box-shadow: inset 11px 11px 22px #dbdad6, inset -11px -11px 22px #ffffff;
   }
 
   .each-question-section ,.each-answer {
-    display: grid;
+   /* display: grid;
     grid-template-columns: 0.5fr 6fr;
     grid-template-rows: repeat(6, 1fr);
     grid-column-gap: 0px;
-    grid-row-gap: 0px;
+    grid-row-gap: 0px; */
     border: #d8d8d8 1px solid;
     border-radius: 10px;
     }

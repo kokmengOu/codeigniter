@@ -197,31 +197,43 @@
                 </div>
               </div>
             </section>
-            <section class="question-container">
-              <template  v-for="question in questions" :key="question.question_id">  <!--https://stackoverflow.com/questions/58424186/using-v-for-and-v-bindkey-->
-                <div class="each-question-section">
-                    <div class="userImg">{{question.img_id}}</div>
-                    <div class="username">{{question.user_FullName}}</div>
-                    <div class="content-time">{{question.question_published}}</div>
-                    <div class="question-title">{{question.question_title}}</div>
-                    <div class="question-content">{{question.question_content}}</div>
-                    <div class="question_tag_container">
+
+						<div class=" mt-lg-5" style="width: 95%;"> <!-- question -->
+              <div class="each-question-section mb-2" v-for="question in questions" :key="question.question_id">
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-1">
+												<div class="question-upvote" @click.once="question.question_upvote++ , Taggle_upvote(question.question_id , question.question_upvote)">
+													<div class="img">
+														<img src="<?php echo base_url(); ?>assets/img/9055013_bx_upvote_icon.png" alt="" srcset="" width="30" height="30">
+													</div>
+													{{question.question_upvote}}
+												</div>
+												<div class="question-downvote" @click.once="question.question_downvote++ , Taggle_downvote(question.question_id ,question.question_downvote)">
+													<div class="img">
+														<img src="<?php echo base_url(); ?>assets/img/9054487_bx_downvote_icon.png" alt="" srcset="" width="30" height="30">
+													</div>
+													{{question.question_downvote}}
+												</div>
                     </div>
-                    <div class="question-upvote" @click.once="question.question_upvote++ , Taggle_upvote(question.question_id , question.question_upvote)">
-                      <div class="img">
-                        <img src="<?php echo base_url(); ?>assets/img/9055013_bx_upvote_icon.png" alt="" srcset="" width="30" height="30">
+                    <div class="col-11">
+											<div class="col">
+                        <div class="row">
+                          <img class="col-1" src="" alt="img">
+                          <h5 class="card-title col-8">{{question.user_FullName}}</h5>
+                        </div>
+                        <p class="fw-light">{{question.question_published}}</p>
                       </div>
-                      {{question.question_upvote}}
-                    </div>
-                    <div class="question-downvote" @click.once="question.question_downvote++ , Taggle_downvote(question.question_id ,question.question_downvote)">
-                      <div class="img">
-                        <img src="<?php echo base_url(); ?>assets/img/9054487_bx_downvote_icon.png" alt="" srcset="" width="30" height="30">
+                      <div>
+                        <h5 class="card-title">{{question.question_title}}</h5>
+                        <p class="fst-normal overflow-hidden text-break " style="height: 70px;">{{question.question_content}}</p>
                       </div>
-                      {{question.question_downvote}}
                     </div>
+                  </div>
                 </div>
-        			</template>
-            </section>
+              </div> 
+							           
+            </div>
           </div>
         </div>
     </div>
