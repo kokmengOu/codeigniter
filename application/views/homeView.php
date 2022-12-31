@@ -106,7 +106,12 @@
               
               <form novalidate="novalidate" onsubmit="return false;" class="searchbox sbx-custom">
                 <div role="search" class="sbx-custom__wrapper">
-                  <input type="search" name="search" placeholder="Search your website" autocomplete="off" required="required" class="sbx-custom__input">
+								<input list="datalistOptions" type="search" name="search" placeholder="Search question" autocomplete="off" required="required" class="sbx-custom__input" @:keyup.enter="onEnter" v-model="search_text">
+									<datalist id="datalistOptions">
+											<div v-for="question in questions" :key="question.question_id">
+														<option :value="question.question_title">
+											</div>
+									</datalist>
                   <button type="submit" title="Submit your search query." class="sbx-custom__submit">
                     <svg role="img" aria-label="Search">
                       <use xlink:href="#sbx-icon-search-12"></use>
@@ -163,7 +168,7 @@
                 </div>
 
                 <div class="add-container" >
-									<a href="<?php echo base_url(); ?>index.php/QuestionAPI/createQuestion" class="row">
+									<a href="<?php echo base_url(); ?>index.php/QuestionAPI/viewaddQuestion" class="row">
                   	<button type="button" class="btn btn-outline-primary">Add Question</button>									
 									</a>
                   <a href="<?php echo base_url(); ?>index.php/TagAPI/createTag" class="row">
@@ -193,7 +198,7 @@
               <div class="relate_tag">Relate Tag</div> 
               <div class="each_tag_container">
                 <div v-for="tag in tags" :key="tag.id">
-                  <button type="button" class="each_tag">{{tag.tag_title}}</button>
+                  <button type="button" class="each_Tag" @click="eachTag(tag.tag_id)">{{tag.tag_title}}</button>
                 </div>
               </div>
             </section>
@@ -216,7 +221,7 @@
 													{{question.question_downvote}}
 												</div>
                     </div>
-                    <div class="col-11">
+                    <div class="col-11" @click="eachQuestion(question.question_id)">
 											<div class="col">
                         <div class="row">
                           <img class="col-1" src="" alt="img">
@@ -231,9 +236,10 @@
                     </div>
                   </div>
                 </div>
-              </div> 
-							           
+              </div>           
             </div>
+
+						
           </div>
         </div>
     </div>

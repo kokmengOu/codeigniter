@@ -6,6 +6,7 @@ const app = createApp({
             url: "https://w1790671.users.ecs.westminster.ac.uk/demo/index.php/",
             title: 'Question',
             questions :[],
+			search_text : '',
         }
     },
 
@@ -31,6 +32,10 @@ const app = createApp({
 			window.location.assign(this.url + "QuestionAPI/eachQuestion/" + id );
 		},
 
+		eachTag(id){
+			window.location.assign(this.url + "TagAPI/vieweachTag/" + id )
+		},
+
 		Taggle_upvote(id , count){
 			axios.post(this.url + "QuestionAPI/addUpvote/" + id + "/" + count )
 			.then((result) => {
@@ -47,8 +52,16 @@ const app = createApp({
 			}).catch((err) => {
 				console.log(err);
 			});
-		}
+		},
 
+		onEnter(){
+			axios.post(this.url + "QuestionAPI/viewSearch/" + this.search_text  )
+			.then((result) => {
+				console.log(result);
+			}).catch((err) => {
+				console.log(err);
+			});
+		}
 		
 
     },

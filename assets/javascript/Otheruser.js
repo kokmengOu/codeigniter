@@ -12,6 +12,8 @@ const app = createApp({
 
 			isVisibleEachUser : false,
             EditisVisibleEachUser: true,
+
+			search_text:'',
         }
     },
 
@@ -85,6 +87,15 @@ const app = createApp({
 				console.log(err);
 			});
 		},
+
+		onEnter(){
+			axios.post(this.url + "QuestionAPI/viewSearch/" + this.search_text  )
+			.then((result) => {
+				console.log(result);
+			}).catch((err) => {
+				console.log(err);
+			});
+		}
 
 
     },

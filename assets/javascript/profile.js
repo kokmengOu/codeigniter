@@ -17,6 +17,7 @@ const app = createApp({
             bio_text: '',
             is_invalid_Description : '',
             is_invalid_bio : '',
+			search_text:'',
 		}
     },
 
@@ -142,7 +143,16 @@ const app = createApp({
             this.bio_text='';
             this.isVisibleEdittwo = !this.isVisibleEdittwo;
             this.EditTwoDanger=  !this.EditTwoDanger;
-        }
+        },
+
+		onEnter(){
+			axios.post(this.url + "QuestionAPI/viewSearch/" + this.search_text  )
+			.then((result) => {
+				console.log(result);
+			}).catch((err) => {
+				console.log(err);
+			});
+		}
 
 
 

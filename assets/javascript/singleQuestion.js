@@ -11,6 +11,7 @@ const app = createApp({
 			eachQuestions:[],
 			answer_text : '',
             comment_text: '',
+			search_text:'',
         }
     },
 
@@ -103,6 +104,15 @@ const app = createApp({
 
 		answer_downvote(id , count){
 			axios.post(this.url + "QuestionAPI/answerDownvote/" + id + "/" + count )
+			.then((result) => {
+				console.log(result);
+			}).catch((err) => {
+				console.log(err);
+			});
+		},
+
+		onEnter(){
+			axios.post(this.url + "QuestionAPI/viewSearch/" + this.search_text  )
 			.then((result) => {
 				console.log(result);
 			}).catch((err) => {

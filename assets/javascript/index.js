@@ -31,6 +31,7 @@ const app = createApp({
                 }],
 
             tags :[],
+			search_text:'',
             
         }
     },
@@ -90,6 +91,23 @@ const app = createApp({
 
 		Taggle_downvote(id , count){
 			axios.post(this.url + "HomeAPI/downvote/" + id + "/" + count )
+			.then((result) => {
+				console.log(result);
+			}).catch((err) => {
+				console.log(err);
+			});
+		},
+
+		eachQuestion(id){
+			window.location.assign(this.url + "QuestionAPI/eachQuestion/" + id );
+		},
+
+		eachTag(id){
+			window.location.assign(this.url + "TagAPI/vieweachTag/" + id )
+		},
+
+		onEnter(){
+			axios.post(this.url + "QuestionAPI/viewSearch/" + this.search_text  )
 			.then((result) => {
 				console.log(result);
 			}).catch((err) => {

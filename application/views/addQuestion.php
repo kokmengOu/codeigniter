@@ -106,7 +106,12 @@
               
               <form novalidate="novalidate" onsubmit="return false;" class="searchbox sbx-custom">
                 <div role="search" class="sbx-custom__wrapper">
-                  <input type="search" name="search" placeholder="Search your website" autocomplete="off" required="required" class="sbx-custom__input">
+									<input list="datalistOptions" type="search" name="search" placeholder="Search question" autocomplete="off" required="required" class="sbx-custom__input" @:keyup.enter="onEnter" v-model="search_text">
+									<datalist id="datalistOptions">
+											<div v-for="question in questions" :key="question.question_id">
+														<option :value="question.question_title">
+											</div>
+									</datalist>
                   <button type="submit" title="Submit your search query." class="sbx-custom__submit">
                     <svg role="img" aria-label="Search">
                       <use xlink:href="#sbx-icon-search-12"></use>
@@ -151,21 +156,24 @@
         </div>
         <div class="side-container">
             <div class="left">
-                <div class="menu__container"> 
+						<div class="menu__container"> 
                   <div class="home-container">
-                    <a href="#" class="menu_btn" style="width: 50px;">Home</a>
+                    <a href="<?php echo base_url(); ?>index.php/HomeAPI/index" class="menu_btn" style="width: 50px;">Home</a>
                   </div>
                     <div class="public-container">Public
-                      <a href="#" class="menu_btn">Questions</a>
-                      <a href="#" class="menu_btn">Tags</a>
-                      <a href="#" class="menu_btn">Unquestion</a>
-                      <a href="#" class="menu_btn">Users</a>
+                      <a href="<?php echo base_url(); ?>index.php/QuestionAPI/index" class="menu_btn">Questions</a>
+                      <a href="<?php echo base_url(); ?>index.php/TagAPI/index" class="menu_btn">Tags</a>
+                      <a href="<?php echo base_url(); ?>index.php/OtheruserAPI/index" class="menu_btn">Users</a>
                     </div>
                 </div>
 
                 <div class="add-container" >
-                  <button type="button" class="btn btn-outline-primary">Add Question</button>
-                  <button type="button" class="btn btn-outline-secondary">Add Tag</button>
+								<a href="<?php echo base_url(); ?>index.php/QuestionAPI/viewaddQuestion" class="row">
+                  	<button type="button" class="btn btn-outline-primary">Add Question</button>									
+									</a>
+                  <a href="<?php echo base_url(); ?>index.php/TagAPI/createTag" class="row">
+										<button type="button" class="btn btn-outline-secondary">Add Tag</button>
+									</a>
                 </div>
                 <div class="logout-container">
 									<?php 

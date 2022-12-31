@@ -4,34 +4,54 @@ const app = createApp({
     data() {
         return {
             url: "https://w1790671.users.ecs.westminster.ac.uk/demo/index.php/",
-            title: 'Tag',
-            tags :[],
-			questionTags: [],
-			eachTags: [],
-			search_text:[],
+            title: 'Question',
+            questions :[],
+			search_text : '',
         }
     },
 
 	created() {
-		this.showTag();
+		this.showQuestion();
 	},
 
     methods: {
 
-		showTag(){
-			axios.get(this.url + "TagAPI/getTag")
+		showQuestion(){
+			axios.get(this.url + "QuestionAPI/seachQuestion")
 			.then((result) => {
-				result.data.tags;
-				console.log(result.data.tags);
-				this.tags = result.data.tags.slice();
-				console.log(this.tags);
+				result.data.questions;
+				console.log(result.data.questions);
+				this.questions = result.data.questions.slice();
+				console.log(this.questions.question_id == result.data.questions.question_id);
 			}).catch((err) => {
 				console.log(err);
 			});
 		},
 
+		eachQuestion(id){
+			window.location.assign(this.url + "QuestionAPI/eachQuestion/" + id );
+		},
+
 		eachTag(id){
 			window.location.assign(this.url + "TagAPI/vieweachTag/" + id )
+		},
+
+		Taggle_upvote(id , count){
+			axios.post(this.url + "QuestionAPI/addUpvote/" + id + "/" + count )
+			.then((result) => {
+				console.log(result);
+			}).catch((err) => {
+				console.log(err);
+			});
+		},
+
+		Taggle_downvote(id , count){
+			axios.post(this.url + "QuestionAPI/addDownvote/" + id + "/" + count )
+			.then((result) => {
+				console.log(result);
+			}).catch((err) => {
+				console.log(err);
+			});
 		},
 
 		onEnter(){
@@ -42,8 +62,6 @@ const app = createApp({
 				console.log(err);
 			});
 		}
-
-
     },
 })
 

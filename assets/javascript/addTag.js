@@ -10,6 +10,7 @@ const app = createApp({
 			isInvalid : '',
 			text_title: '',
 			text_content : '',
+			search_text:'',
 
         }
     },
@@ -36,6 +37,15 @@ const app = createApp({
 			.then((result) => {
 				alert("You have been successfully")
 				window.location.assign(this.url + "HomeAPI/index");
+			}).catch((err) => {
+				console.log(err);
+			});
+		},
+
+		onEnter(){
+			axios.post(this.url + "QuestionAPI/viewSearch/" + this.search_text  )
+			.then((result) => {
+				console.log(result);
 			}).catch((err) => {
 				console.log(err);
 			});

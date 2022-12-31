@@ -106,7 +106,12 @@
               
               <form novalidate="novalidate" onsubmit="return false;" class="searchbox sbx-custom">
                 <div role="search" class="sbx-custom__wrapper">
-                  <input type="search" name="search" placeholder="Search your website" autocomplete="off" required="required" class="sbx-custom__input">
+								<input list="datalistOptions" type="search" name="search" placeholder="Search question" autocomplete="off" required="required" class="sbx-custom__input" @:keyup.enter="onEnter" v-model="search_text">
+									<datalist id="datalistOptions">
+											<div v-for="question in questions" :key="question.question_id">
+														<option :value="question.question_title">
+											</div>
+									</datalist>
                   <button type="submit" title="Submit your search query." class="sbx-custom__submit">
                     <svg role="img" aria-label="Search">
                       <use xlink:href="#sbx-icon-search-12"></use>
@@ -158,12 +163,12 @@
                     <div class="public-container">Public
                       <a href="<?php echo base_url(); ?>index.php/QuestionAPI/index" class="menu_btn">Questions</a>
                       <a href="<?php echo base_url(); ?>index.php/TagAPI/index" class="menu_btn">Tags</a>
-                      <a href="<?php echo base_url(); ?>index.php/OtherUserAPI/index" class="menu_btn">Users</a>
+                      <a href="<?php echo base_url(); ?>index.php/OtheruserAPI/index" class="menu_btn">Users</a>
                     </div>
                 </div>
 
                 <div class="add-container" >
-									<a href="<?php echo base_url(); ?>index.php/QuestionAPI/createQuestion" class="row">
+									<a href="<?php echo base_url(); ?>index.php/QuestionAPI/viewaddQuestion" class="row">
                   	<button type="button" class="btn btn-outline-primary">Add Question</button>									
 									</a>
                   <a href="<?php echo base_url(); ?>index.php/TagAPI/createTag" class="row">
@@ -190,31 +195,41 @@
         <div class="content-container">
           <div class="inside-container">
 
-		  <section class="question-container">
-              <template  v-for="question in questions" :key="question.question_id">  <!--https://stackoverflow.com/questions/58424186/using-v-for-and-v-bindkey-->
-                <div class="each-question-section">
-                    <div class="userImg" @click="eachQuestion(question.question_id)">{{question.img_id}}</div>
-                    <div class="username" @click="eachQuestion(question.question_id)">{{question.user_FullName}}</div>
-                    <div class="content-time" @click="eachQuestion(question.question_id)">{{question.question_published}}</div>
-                    <div class="question-title" @click="eachQuestion(question.question_id)">{{question.question_title}}</div>
-                    <div class="question-content" @click="eachQuestion(question.question_id)">{{question.question_content}}</div>
-                    <div class="question_tag_container">
+					<div class=" mt-lg-5" style="width: 95%;">  <!--https://stackoverflow.com/questions/58424186/using-v-for-and-v-bindkey-->
+              <div class="each-question-section mb-2" v-for="question in questions" :key="question.question_id">
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-1">
+												<div class="question-upvote" @click.once="question.question_upvote++ , Taggle_upvote(question.question_id , question.question_upvote)">
+													<div class="img">
+														<img src="<?php echo base_url(); ?>assets/img/9055013_bx_upvote_icon.png" alt="" srcset="" width="30" height="30">
+													</div>
+													{{question.question_upvote}}
+												</div>
+												<div class="question-downvote" @click.once="question.question_downvote++ , Taggle_downvote(question.question_id ,question.question_downvote)">
+													<div class="img">
+														<img src="<?php echo base_url(); ?>assets/img/9054487_bx_downvote_icon.png" alt="" srcset="" width="30" height="30">
+													</div>
+													{{question.question_downvote}}
+												</div>
                     </div>
-                    <div class="question-upvote" @click.once="question.question_upvote++ , Taggle_upvote(question.question_id , question.question_upvote)">
-                      <div class="img">
-                        <img src="<?php echo base_url(); ?>assets/img/9055013_bx_upvote_icon.png" alt="" srcset="" width="30" height="30">
+                    <div class="col-11" @click="eachQuestion(question.question_id)">
+											<div class="col">
+                        <div class="row">
+                          <img class="col-1" src="" alt="img">
+                          <h5 class="card-title col-8">{{question.user_FullName}}</h5>
+                        </div>
+                        <p class="fw-light">{{question.question_published}}</p>
                       </div>
-                      {{question.question_upvote}}
-                    </div>
-                    <div class="question-downvote" @click.once="question.question_downvote++ , Taggle_downvote(question.question_id ,question.question_downvote)">
-                      <div class="img">
-                        <img src="<?php echo base_url(); ?>assets/img/9054487_bx_downvote_icon.png" alt="" srcset="" width="30" height="30">
+                      <div>
+                        <h5 class="card-title">{{question.question_title}}</h5>
+                        <p class="fst-normal overflow-hidden text-break " style="height: 70px;">{{question.question_content}}</p>
                       </div>
-                      {{question.question_downvote}}
                     </div>
+                  </div>
                 </div>
-        			</template>
-            </section>
+              </div>           
+            </div>
 
           </div>
         </div>
