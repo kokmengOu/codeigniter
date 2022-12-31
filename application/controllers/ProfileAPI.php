@@ -36,11 +36,6 @@ class ProfileAPI extends CI_Controller {
 
 	}
 
-	public function getFavorite()
-	{
-
-	}
-
 	public function getTag()
 	{
 		$response["tags"] = $this->Profile_model->getUserTag($this->session->userdata('id'));

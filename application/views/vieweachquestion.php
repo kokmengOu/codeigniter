@@ -189,46 +189,119 @@
         <div class="title-container" >{{title}}</div>
         <div class="content-container">
           <div class="inside-container">
+					
+								<div class="card mb-3" style="width: 95%;">
 
-		  		<div class="card mb-3" style="width: 95%;">
-                    <div class="card-body" v-for="eachTag in eachTags" :key="eachTag.tag_id">
-                        <h5 class="card-title fw-bold">{{eachTag.tag_title}}</h5>
-                        <h6 class="card-subtitle mb-2 text-muted fs-6">{{eachTag.tag_timestamp}}</h6>
-                        <p class="card-text ">{{eachTag.tag_content}}</p>
+									<div class="card-body" v-for="user in users" :key="user.user_id">
+											<h5 class="card-title">{{user.user_FullName}}</h5>
+											<div class="card-body">
+													<a href="#" class="card-link btn btn-secondary">Card link</a>
+													<a href="#" class="card-link btn btn-secondary">Another link</a>
+													<a href="#" class="card-link btn btn-secondary">Another link</a>
+													<a href="#" class="card-link btn btn-secondary">Another link</a>
+													<a href="#" class="card-link btn btn-secondary">Another link</a>
+											</div>
+									</div>
+
+								</div>
+
+									<div class="card mb-3 bg-transparent" style="width: 95%;">
+
+									<div class="card-body border border-1 bg-white" v-for="eachQuestion in eachQuestions" :key="eachQuestion.question_id">
+											<div class="row align-items-start">
+													<div class="col-2">
+															<div class="d-flex justify-content-center align-items-center" @click.once="eachQuestion.question_upvote++ , Taggle_upvote(eachQuestion.question_id , eachQuestion.question_upvote)">
+															<img src="<?php echo base_url(); ?>assets/img/9055013_bx_upvote_icon.png" alt="" srcset="" width="30" height="30">
+															</div>
+															<div class="d-flex justify-content-center align-items-center">{{eachQuestion.question_upvote}}</div>
+															<div class="d-flex justify-content-center align-items-center">{{eachQuestion.question_downvote}}</div>
+															<div class="d-flex justify-content-center align-items-center" @click.once="eachQuestion.question_downvote++ , Taggle_downvote(eachQuestion.question_id ,eachQuestion.question_downvote)">
+															<img src="<?php echo base_url(); ?>assets/img/9054487_bx_downvote_icon.png" alt="" srcset="" width="30" height="30">
+															</div>
+													</div>
+													<div class="col">
+															<div class="row">
+																	<h6 class="card-title mb-2 text-black">{{eachQuestion.question_title}}</h6>
+																	<p class="card-subtitle mb-2 text-muted">{{eachQuestion.question_published}}</p>
+															</div>
+															<div class="row">
+																	<p class="card-text " style="height: 4rem;">{{eachQuestion.question_content}}</p>
+															</div>
+													</div>
+											</div>
+									</div>
+
+									</div>
+									<div class="card mb-3" style="width: 95%;">
+
+									<div class="card-body bg-white mb-1" v-for="answer in answers" :key="answer.answer_id"> 
+											<div class="row align-items-start">
+													<div class="col-2">
+															<div class="d-flex justify-content-center align-items-center"@click.once="answer.answer_upvote++ , answer_upvote(answer.answer_id, answer.answer_upvote)">
+															<img src="<?php echo base_url(); ?>assets/img/9055013_bx_upvote_icon.png" alt="" srcset="" width="30" height="30">
+															</div>
+															<div class="d-flex justify-content-center align-items-center">{{answer.answer_upvote}}</div>
+															<div class="d-flex justify-content-center align-items-center">{{answer.answer_downvote}}</div>
+															<div class="d-flex justify-content-center align-items-center" @click.once="answer.answer_downvote++ , answer_downvote(answer.answer_id, answer.answer_downvote)">
+															<img src="<?php echo base_url(); ?>assets/img/9054487_bx_downvote_icon.png" alt="" srcset="" width="30" height="30">
+															</div>
+													</div>
+													<div class="col">
+															<div class="row">
+																	<h6 class="card-title mb-2 text-black">NAME</h6>
+																	<p class="card-subtitle mb-2 text-muted">{{answer.answer_timestamp}}</p>
+															</div>
+															<div class="row">
+																	<p class="card-text" style="height: 4rem;">{{answer.answer_content}}</p>
+															</div>
+															<div class="row  mt-4">
+                                    <h6 class="card-title mb-2 text-black">Comment</h6>
+                                    <div class="row m-2 " v-for="comment in comments" :key="comment.comment_id">
+                                            <p class="card-text text-muted ">{{comment.comment_content}}</p>
+                                    </div>
+                                </div>
+															<div class="mt-4 row">
+																	<form class="needs-validation" novalidate>
+																			<div class="mb-2">
+																				<textarea class="form-control is-invalid" id="validationTextarea" placeholder="Comment"  rows="1" v-model="comment_text" required></textarea>
+																				<div class="invalid-feedback">
+																					Please enter a message in the textarea.
+																				</div>
+																			</div>
+																			<div class="d-grid gap-2 d-md-flex justify-content-md-end">
+																					<button class="btn btn-outline-primary" type="button" @click="addComment(answer.answer_id)">Button</button>
+																				</div>
+																	</form>
+															</div>
+													</div>
+											</div>
+									</div>
+
+									<div class="card-body bg-white">
+                        <div class="row align-items-start">
+                            <form class="needs-validation" novalidate>
+                                <label for="exampleFormControlTextarea1" class="form-label">Answer</label>
+                                <div class="mb-2">
+                                  <textarea class="form-control is-invalid" id="validationTextarea" placeholder="Comment"  rows="6" v-model="answer_text" required></textarea>
+                                  <div class="invalid-feedback">
+                                    Please enter a message in the textarea.
+                                  </div>
+                                </div>
+                                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                                    <button class="btn btn-outline-primary" type="button" @click="addAnswer">Submit</button>
+                                  </div>
+                            </form>
+                        </div>
                     </div>
-                </div>
 
-                <div class="card mb-3" style="width: 95%;" >
-                  <div class="card-body bg-white mb-1" v-for="questionsTag in questionTags" :key="questionsTag.question_id"> 
-                      <div class="row align-items-start">
-                          <div class="col-2">
-                              	<div class="d-flex justify-content-center align-items-center"  @click.once="question.question_upvote++ , Taggle_upvote(question.question_id , question.question_upvote)">
-									<img src="<?php echo base_url(); ?>assets/img/9055013_bx_upvote_icon.png" alt="" srcset="" width="30" height="30">
 								</div>
-								<div class="d-flex justify-content-center align-items-center">{{questionsTag.question_upvote}}</div>
-								<div class="d-flex justify-content-center align-items-center">{{questionsTag.question_downvote}}</div>
-								<div class="d-flex justify-content-center align-items-center"  @click.once="question.question_upvote++ , Taggle_upvote(question.question_id , question.question_upvote)">
-									<img src="<?php echo base_url(); ?>assets/img/9054487_bx_downvote_icon.png" alt="" srcset="" width="30" height="30">
-								</div>
-                          </div>
-                          <div class="col">
-                              <div class="row">
-                                  <h6 class="card-title mb-2 text-black">{{questionsTag.question_title}}</h6>
-                                  <p class="card-subtitle mb-2 text-muted">{{questionsTag.question_published}}</p>
-                              </div>
-                              <div class="row">
-                                  <p class="card-text">{{questionsTag.question_content}}</p>
-                              </div>
-                          </div>
-                      </div>
-                  </div>
 
-                </div>
+
 
           </div>
         </div>
     </div>
 
-    <script src="<?php echo base_url() ;?>assets/javascript/index.js"></script>
+    <script src="<?php echo base_url() ;?>assets/javascript/singleQuestion.js"></script>
 </body>
 </html>

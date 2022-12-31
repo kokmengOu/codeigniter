@@ -24,7 +24,7 @@ class Answer_model extends CI_Model {
 
 	public function getComment($answer)
 	{
-		$this->db->where('answer_id', $answer);
+		$this->db->where('question_id', $answer);
 		$result = $this->db->get($this->table);
 		if ($result->num_rows() > 0) {
 			return $result->result();

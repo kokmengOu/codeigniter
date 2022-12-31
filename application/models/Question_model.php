@@ -68,5 +68,16 @@ class Question_model extends CI_Model {
 		}
 	}
 
+	public function getQuestionUser($data)
+	{
+		$this->db->where('user_id', $data);
+		$query = $this->db->get('user_detail');
+		if($query->num_rows() > 0){
+			return $query->result();
+		}else{
+			return false;
+		}
+	}
+
 	
 }

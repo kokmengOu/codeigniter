@@ -24,55 +24,55 @@ class QuestionAPI extends CI_Controller {
 
 	public function eachQuestion() // view page
 	{
-		$this->load->view('eachQuestion');
-		$data = array('tag_id' => $this->uri->segment(3));
+		$this->load->view('vieweachquestion');
+		$data = array('question_id' => $this->uri->segment(3));
 		$this->session->set_userdata( $data );
 	}
 
 	public function addQuestion()
 	{
-		
+		//later
 	}
 
 	public function addAnswer()
 	{
 		$data = array(
-			'user_id' => $this->input->post('userid'), 
-			'question_id' => $this->input->post('questionid'), 
+			'user_id' => $this->session->userdata('id'), 
+			'question_id' => $this->session->userdata('question_id'), 
 			'answer_id'=> $this->input->post('answerid'),
 			'comment_content'=> $this->input->post('commentcontent'),
 			'answer_timestamp' => date('Y-m-d H:i:s'),
 		);
-		$response = $this->Profile_model->updateBio( $this->session->userdata('id') , $data);
+		$response = $this->Answer_model->addAnswer($data);
 		redirect('eachQuestion','refresh');
 	}
 
 	public function addComment()
 	{
 		$data = array(
-			'user_id' => $this->input->post('userid'), 
-			'question_id' => $this->input->post('questionid'), 
+			'user_id' => $this->session->userdata('id'), 
+			'question_id' => $this->session->userdata('question_id'), 
 			'answer_id'=> $this->input->post('answerid'),
 			'comment_content'=> $this->input->post('commentcontent'),
 		);
-		$response = $this->Answer_model->addComment( $this->session->userdata('id') , $data);
+		$response = $this->Answer_model->addComment($data);
 		redirect('eachQuestion','refresh');
 	}
 
 	public function addFavorite()
 	{
 		$data = array(
-			'user_id' => $this->input->post('userid'), 
+			'user_id' => $this->session->userdata('id'), 
 			'question_id' => $this->input->post('questionid'), 
 		);
 
-		$response = $this->Profile_model->updateBio( $this->session->userdata('id') , $data);
+		$response = $this->Profile_model->updateBio( $data);
 		redirect('eachQuestion','refresh');
 	}
 
 	public function addUpvote()
 	{
-		$id = $this->uri->segment(3);
+		$id = $this->uri->segment(3); 
 		$count = $this->uri->segment(4);
 		$this->Question_model->upvote($id,$count);
 	}
@@ -109,31 +109,35 @@ class QuestionAPI extends CI_Controller {
 		echo json_encode($response);
 	}
 
+	public function getQuestionUser()
+	{
+		$response["questionUser"] = $this->Question_model->getQuestionUser( $this->uri->segment(3) );
+		echo json_encode($response);
+	}
+
 	public function getAnswer()
 	{
-		$url = $this->uri->segment(3); // question_id
-		$response["answers"] = $this->Answer_model->getAnswer($url);
+		$response["answers"] = $this->Answer_model->getAnswer($this->session->userdata('question_id'));
 		echo json_encode($response);
 		redirect('ProfileAPI','refresh');
 	}
 
 	public function getComment()
 	{
-		$answer = $this->uri->segment(3);
-		$response["comments"] = $this->Answer_model->getComment($answer);
+		$response["comments"] = $this->Answer_model->getComment($this->session->userdata('question_id'));
 		echo json_encode($response);
 	}
 
 	public function deleteAnswer()
 	{
-		$url = $this->uri->segment(3); // question id
+		$url = $this->uri->segment(3); // answer id
 		$response = $this->Answer_model->deleteAnswer($url);
 		redirect('ProfileAPI','refresh');
 	}
 
 	public function deleteComment()
 	{
-		$url = $this->uri->segment(3); // answer id
+		$url = $this->uri->segment(3); // comment id
 		$response = $this->Answer_model->deleteComment($url);
 		redirect('ProfileAPI','refresh');
 	}

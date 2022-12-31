@@ -6,7 +6,6 @@ const app = createApp({
             url: "https://w1790671.users.ecs.westminster.ac.uk/demo/index.php/",
             title: 'Question',
             questions :[],
-            
         }
     },
 
@@ -28,8 +27,8 @@ const app = createApp({
 			});
 		},
 
-		eachTag(id){
-			console.log(id);
+		eachQuestion(id){
+			window.location.assign(this.url + "QuestionAPI/eachQuestion/" + id );
 		},
 
 		Taggle_upvote(id , count){
@@ -49,6 +48,8 @@ const app = createApp({
 				console.log(err);
 			});
 		}
+
+		
 
     },
 })
