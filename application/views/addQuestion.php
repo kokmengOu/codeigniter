@@ -106,7 +106,7 @@
               
               <form novalidate="novalidate" onsubmit="return false;" class="searchbox sbx-custom">
                 <div role="search" class="sbx-custom__wrapper">
-									<input list="datalistOptions" type="search" name="search" placeholder="Search question" autocomplete="off" required="required" class="sbx-custom__input" @:keyup.enter="onEnter" v-model="search_text">
+									<input list="datalistOptions" type="search" name="search" placeholder="Search question" autocomplete="off" required="required" class="sbx-custom__input" v-model="search_text">
 									<datalist id="datalistOptions">
 											<div v-for="searchQuestion in searchQuestions" :key="searchQuestion.question_id">
 														<option :value="searchQuestion.question_title">
@@ -127,7 +127,7 @@
 
             </div>
             <div class="add-Question-hero" >
-                <a href="#" class="btn-question">Add Question</a>
+                <a href="#" class="btn-question" @click="onEnter">Search</a>
             </div>
             <div class="add-user-hero">
 								<?php 

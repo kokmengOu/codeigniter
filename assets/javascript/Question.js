@@ -60,6 +60,7 @@ const app = createApp({
 			axios.post(this.url + "QuestionAPI/viewSearch/" + this.search_text  )
 			.then((result) => {
 				console.log(result);
+				window.location.assign(this.url + "QuestionAPI/viewSearch/" + this.search_text);
 			}).catch((err) => {
 				console.log(err);
 			});

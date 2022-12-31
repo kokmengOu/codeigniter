@@ -23,10 +23,10 @@ const app = createApp({
 		getSearchQuestion(){
 			axios.get(this.url + "QuestionAPI/getQuestion")
 			.then((result) => {
-				result.data.searchQuestion;
-				console.log(result.data.searchQuestion);
-				this.searchQuestions = result.data.searchQuestion.slice();
-				console.log(this.searchQuestions.question_id == result.data.searchQuestion.question_id);
+				result.data.questions;
+				console.log(result.data.questions);
+				this.searchQuestions = result.data.questions.slice();
+				console.log(this.searchQuestions.question_id == result.data.questions.question_id);
 			}).catch((err) => {
 				console.log(err);
 			});
@@ -63,6 +63,7 @@ const app = createApp({
 			axios.post(this.url + "QuestionAPI/viewSearch/" + this.search_text  )
 			.then((result) => {
 				console.log(result);
+				window.location.assign(this.url + "QuestionAPI/viewSearch/" + this.search_text);
 			}).catch((err) => {
 				console.log(err);
 			});

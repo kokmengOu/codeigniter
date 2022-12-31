@@ -65,6 +65,9 @@ class Profile_model extends CI_Model {
 		if ($query) {
 			$this->db->where($data);
 			$query = $this->db->delete('question');
+		}else{
+			$this->db->where($data);
+			$query = $this->db->delete('question');
 		}
 	}
 
@@ -76,9 +79,13 @@ class Profile_model extends CI_Model {
 
 		$this->db->where($data);
 		$query = $this->db->delete('question_tag');
-
-		$this->db->where($data);
-		$query = $this->db->delete('tag');
+		if ($query) {
+			$this->db->where($data);
+			$query = $this->db->delete('tag');
+		}else{
+			$this->db->where($data);
+			$query = $this->db->delete('tag');
+		}
 	}
 
 }
