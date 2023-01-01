@@ -56,6 +56,12 @@ class RegisterAndLogin_model extends CI_Model {
 						'loggin_in' => true
 					);
 					$this->session->set_userdata($data);
+
+					
+					$this->db->set('user_Lastlogin',date('Y-m-d H:i:s') );
+					$this->db->where('user_id', $row->user_id);
+					$this->db->update('user_detail');
+
 				}else{
 					return false;
 				}
@@ -65,6 +71,17 @@ class RegisterAndLogin_model extends CI_Model {
 			return false;
 		}
 
+	}
+
+	public function logout($id)
+	{
+		$data = array(
+			'user_Lasrlogout' => date('Y-m-d H:i:s'),
+		);
+
+		$this->db->set($data);
+		$this->db->where('user_id', $id);
+		$this->db->update('user_detail');
 	}
 
 }

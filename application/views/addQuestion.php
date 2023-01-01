@@ -220,8 +220,8 @@
 													<div class="col">
 							
 														<div class="mb-3">
-																<input class="form-control" list="datalistOptions" id="exampleDataList" placeholder="Type to search..." v-model="value_one">
-																<datalist id="datalistOptions">
+																<input class="form-control" list="datalisttags" id="list1" placeholder="Type to search..." v-model="value_one">
+																<datalist id="datalisttags">
 																	<div v-for="tag in tags" :key="tag.tag_id">
 																	<option :value="tag.tag_title">
 																	</div>
@@ -231,12 +231,7 @@
 													<div class="col">
 
 														<div class="mb-3">
-																<input class="form-control" list="datalistOptions" id="exampleDataList" placeholder="Type to search..." v-model="value_two">
-																<datalist id="datalistOptions">
-																	<div v-for="tag in tags" :key="tag.tag_id">
-																		<option :value="tag.tag_title">
-																	</div>
-																</datalist>
+																<input class="form-control" list="datalisttags" id="list1" placeholder="Type to search..." v-model="value_two">
 															</div>
 													</div>
 												</div>
@@ -244,33 +239,18 @@
 													<div class="col">
 
 														<div class="mb-3">
-																<input class="form-control" list="datalistOptions" id="exampleDataList" placeholder="Type to search..." v-model="value_three">
-																<datalist id="datalistOptions">
-																	<div v-for="tag in tags" :key="tag.tag_id">
-																		<option :value="tag.tag_id">
-																	</div>
-																</datalist>
+															<input class="form-control" list="datalisttags" id="list1" placeholder="Type to search..." v-model="value_three">
 															</div>
 													</div>
 													<div class="col">
 
 														<div class="mb-3">
-																<input class="form-control" list="datalistOptions" id="exampleDataList" placeholder="Type to search..." v-model="value_four">
-																<datalist id="datalistOptions">
-																	<div v-for="tag in tags" :key="tag.tag_id">
-																	<option :value="tag.tag_title">
-																	</div>
-																</datalist>
+														<input class="form-control" list="datalisttags" id="list1" placeholder="Type to search..." v-model="value_four">
 															</div>
 													</div>
 													<div class="col">
 														<div class="mb-3">
-																<input class="form-control" list="datalistOptions" id="exampleDataList" placeholder="Type to search..." v-model="value_five">
-																<datalist id="datalistOptions">
-																	<div v-for="tag in tags" :key="tag.tag_id">
-																	<option :value="tag.tag_title">
-																	</div>
-																</datalist>
+														<input class="form-control" list="datalisttags" id="list1" placeholder="Type to search..." v-model="value_five">
 														</div>
 													</div>
 												</div>

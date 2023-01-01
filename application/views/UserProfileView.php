@@ -195,13 +195,14 @@
         <div class="content-container">
 			<div class="inside-container">
 			
-			<div class="parent_container container" >
-                    <div class="div1_container position-relative">
+			<div class="col container" >
+				<div class="row mb-3 ">
+					<div class="position-relative col-1">
                         <div class="position-absolute top-50 start-50 translate-middle btn btn-sm btn-primary rounded-pill">
                             <img src="" alt="" srcset="" width="40" height="40">
                         </div>
                     </div>
-                    <div class="div2_container">
+					<div class="div2_container col-8">
                         <div class="username">
                             <?php echo $this->session->userdata('username') ?>
                         </div>
@@ -212,6 +213,7 @@
 						<?php echo $this->session->userdata('user_Lasrlogout') ?>
                         </div>
                     </div>
+				</div>
                     <div class="div3_container">
                         <ul class="nav nav-tabs" id="myTab" role="tablist">
                             <li class="nav-item" role="presentation">
@@ -262,7 +264,7 @@
                             <div class="tab-pane fade" id="question" role="tabpanel" aria-labelledby="question-tab">
                                 <div class="container-xxl question_parent">
                                     <div class="question_child" v-for="question in questions" :key="question.question_id" >
-                                        <div class="question_title">
+                                        <div class="question_title" @click="eachQuestion(question.question_id)">
 											<div class="row">
 													<div class="col">
 														<p class="col">{{question.question_title}}</p>
@@ -270,12 +272,12 @@
 													<div class="col d-grid d-md-flex justify-content-md-end">
 														<button class="btn btn-outline-info" type="button" @click="deleteQuestion(question.question_id)">delete</button>
 													</div>
-												</div>
+											</div>
 										</div>
-                                        <div class="question_content">
+                                        <div class="question_content" @click="eachQuestion(question.question_id)">
 										{{question.question_content}}
                                         </div>
-                                        <div class="question_vote row">
+                                        <div class="question_vote row" >
                                             <div class="row">
                                                 <img src="" alt="img" srcset="">
                                                 {{question.question_upvote}}
@@ -296,8 +298,11 @@
                                         <h5 class="card-title">{{tag.tag_title}}</h5>
                                         <h6 class="card-subtitle mb-2 text-muted">{{tag.tag_timestamp}}</h6>
                                         <p class="card-text overflow-hidden">{{tag.tag_content}}</p>
-                                        <a href="#" class="card-link">Read More</a>
-										<button class="btn btn-outline-info" type="button" @click="deletetag(tag.tag_id)">delete</button>
+
+										<div class="d-grid gap-2 d-md-flex justify-content-md-end">
+											<button class="btn btn-primary me-md-2" type="button"  @click="eachTag(tag.tag_id)" >Read More</button>
+											<button class="btn btn-outline-info" type="button" @click="deletetag(tag.tag_id)">delete</button>
+										</div>
                                         </div>
                                     </div>
                                 </div>
@@ -306,12 +311,15 @@
                             <div class="tab-pane fade" id="favorite" role="tabpanel" aria-labelledby="favorite-tab">
                                 <div class="container-xxl tag_parent d-flex flex-wrap gap-5">
                                     <div class="card" style="width: 18rem;">
-                                        <div class="card-body">
-                                        <h5 class="card-title">Card title</h5>
-                                        <h6 class="card-subtitle mb-2 text-muted">Card time</h6>
-                                        <p class="card-text overflow-hidden">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                                        <div class="card-body" v-for="favorite in favorites" :key="favorite.question_id">
+                                        <h5 class="card-title">{{favorite.question_title}}</h5>
+                                        <h6 class="card-subtitle mb-2 text-muted">{{favorite.question_published}}</</h6>
+                                        <p class="card-text overflow-hidden" style="height: 1rem;">{{favorite.question_content}}</p>
                                         <a href="#" class="card-link">Card link</a>
-                                        <img src="" alt="img" srcset="">
+										<div class="d-grid gap-2 d-md-flex justify-content-md-end">
+											<button class="btn btn-primary me-md-2" type="button"  @click="eachQuestion(favorite.question_id)" >Read More</button>
+											<button class="btn btn-outline-info" type="button" @click="deleteFavorite(favorite.question_id)">delete</button>
+										</div>
                                         </div>
                                     </div>
                                 </div>

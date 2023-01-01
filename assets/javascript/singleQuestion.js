@@ -9,22 +9,28 @@ const app = createApp({
 			comments: [],
 			answers:[],
 			eachQuestions:[],
+			tags:[],
 			answer_text : '',
             comment_text: '',
 			search_text:'',
 			searchQuestions:[],
+			favorite_isVisible : false,
+			isInvalid : '',
+			isInvalidComment:'',
+
         }
     },
 
 	created() {
 		this.showQuestion();
+		this.getQuestionTag();
 		this.getAnswer();
 		this.getComment();
 		this.getSearchQuestion();
+		this.checkFavorite();
 	},
 
-    methods: {
-		
+    methods: {		
 		getSearchQuestion(){
 			axios.get(this.url + "QuestionAPI/getQuestion")
 			.then((result) => {
@@ -46,6 +52,21 @@ const app = createApp({
 				console.log(this.eachQuestions);
 				data = this.eachQuestions[0].user_id;
 				this.getQuestionUser(data);
+			}).catch((err) => {
+				console.log(err);
+			});
+		},
+
+		getQuestionTag(){
+			axios.get(this.url + "QuestionAPI/getQuestionTag")
+			.then((result) => {
+				result.data.tags;
+				console.log(result.data.tags);
+
+				const response = result.data.tags.filter(({ question_id }) => question_id === this.eachQuestions[0].question_id );
+
+				this.tags = response.slice();
+				console.log(this.tags);
 			}).catch((err) => {
 				console.log(err);
 			});
@@ -106,6 +127,42 @@ const app = createApp({
 			});
 		},
 
+		checkFavorite(){
+			axios.get(this.url + "QuestionAPI/checkFavorite")
+			.then((result) => {
+				result.data.checkFavorite;
+				console.log(result.data.checkFavorite);
+				this.favorite_isVisible = result.data.checkFavorite.check;
+			}).catch((err) => {
+				console.log(err);
+			});
+		},
+
+        Taggle_favorite(id){
+			if (this.favorite_isVisible != true) { //favorite
+				axios.post(this.url + "QuestionAPI/addFavorite/" + id  )
+				.then((result) => {
+					console.log(result);
+					this.favorite_isVisible = true;
+				}).catch((err) => {
+					console.log(err);
+				});
+			} else { //not favorite
+				axios.post(this.url + "QuestionAPI/deleteFavorite/" + id  )
+				.then((result) => {
+					console.log(result);
+					this.favorite_isVisible = false;
+				}).catch((err) => {
+					console.log(err);
+				});
+			}
+
+        },
+
+		eachTag(id){
+			window.location.assign(this.url + "TagAPI/vieweachTag/" + id )
+		},
+
 		answer_upvote(id , count){
 			axios.post(this.url + "QuestionAPI/answerUpvote/" + id + "/" + count )
 			.then((result) => {
@@ -122,6 +179,61 @@ const app = createApp({
 			}).catch((err) => {
 				console.log(err);
 			});
+		},
+
+		addComment(id){
+			if (this.comment_text != '' && this.comment_text != null) {
+				const form = new FormData();
+				form.append("answerId", id);
+				form.append("comment" , this.comment_text);
+	
+				axios.post(this.url + "QuestionAPI/addComment", form )
+				.then((result) => {
+					alert("comment Successfully add");
+					window.location.assign(this.url + "QuestionAPI/eachQuestion/" + this.eachQuestions[0].question_id );
+					console.log(result);
+				}).catch((err) => {
+					console.log(err);
+				});
+			}else{
+				this.isInvalidComment = 'is-invalid';
+			}
+		},
+
+		addAnswer(){
+			if (this.answer_text != '' && this.answer_text != null)  {
+				console.log(this.answer_text);
+				const form = new FormData();
+				form.append("answercontent", this.answer_text);
+				axios.post(this.url + "QuestionAPI/addAnswer", form )
+				.then((result) => {
+					alert("Answer Successfully add");
+					window.location.assign(this.url + "QuestionAPI/eachQuestion/" + this.eachQuestions[0].question_id );
+					console.log(result);
+				}).catch((err) => {
+					console.log(err);
+				});
+			}else{
+				this.isInvalid = 'is-invalid';
+			}
+		},
+
+		deleteAnswer(id)
+		{
+			axios.post(this.url + "QuestionAPI/deleteAnswer/" + id)
+			.then((result) => {
+				alert("Answer Successfully delete");
+				window.location.assign(this.url + "QuestionAPI/eachQuestion/" + this.eachQuestions[0].question_id );
+			})
+		},
+
+		deleteComment(id)
+		{
+			axios.post(this.url + "QuestionAPI/deleteComment/" + id)
+			.then((result) => {
+				alert("Comment Successfully delete");
+				window.location.assign(this.url + "QuestionAPI/eachQuestion/" + this.eachQuestions[0].question_id );
+			})
 		},
 
 		onEnter(){

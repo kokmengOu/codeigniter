@@ -222,15 +222,9 @@
 												</div>
                     </div>
                     <div class="col-11" @click="eachQuestion(question.question_id)">
-											<div class="col">
-                        <div class="row">
-                          <img class="col-1" src="" alt="img">
-                          <h5 class="card-title col-8">{{question.user_FullName}}</h5>
-                        </div>
-                        <p class="fw-light">{{question.question_published}}</p>
-                      </div>
                       <div>
                         <h5 class="card-title">{{question.question_title}}</h5>
+												<p class="fw-light">{{question.question_published}}</p>
                         <p class="fst-normal overflow-hidden text-break " style="height: 70px;">{{question.question_content}}</p>
                       </div>
                     </div>

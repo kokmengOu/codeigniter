@@ -7,7 +7,7 @@ const app = createApp({
 			title: 'PROFILE',
 			questions: [],
 			tags: [],
-			favorite: [],
+			favorites: [],
 			Userdetails: [],
 			isVisibleEditOne : false,
             EditOneDanger: true,
@@ -23,11 +23,11 @@ const app = createApp({
     },
 
 	created() {
+		this.showUserDetail();
+		this.getSearchQuestion();
 		this.showUserQuestion();
 		this.showUserTag();
 		this.showUserfavorite();
-		this.showUserDetail();
-		this.getSearchQuestion();
 	},
 
     methods: {
@@ -80,7 +80,11 @@ const app = createApp({
 			axios.get(this.url + "ProfileAPI/getFavorite")
 			.then((result) => {
 				result.data.favorites;
-				this.favorite = result.data.favorites.slice();
+
+				const response = result.data.favorites.filter(({ user_id }) => user_id === this.Userdetails[0].user_id );
+
+				this.favorites = response.slice();
+				console.log(this.favorites);
 			}).catch((err) => {
 				console.log(err);
 			});
@@ -97,11 +101,28 @@ const app = createApp({
 
 		deletetag(id)
 		{
-			axios.post(this.url + "ProfileAPI/deleteTag", +id)
+			axios.post(this.url + "ProfileAPI/deleteTag/" +id)
 			.then((result) => {
 				alert("Tag Successfully delete");
 				window.location.assign(this.url + "ProfileAPI/index");
 			})
+		},
+
+		deleteFavorite(id)
+		{
+			axios.post(this.url + "ProfileAPI/deleteFavorite/" +id)
+			.then((result) => {
+				alert("Favorite Successfully delete");
+				window.location.assign(this.url + "ProfileAPI/index");
+			})
+		},
+
+		eachTag(id){
+			window.location.assign(this.url + "TagAPI/vieweachTag/" + id )
+		},
+
+		eachQuestion(id){
+			window.location.assign(this.url + "QuestionAPI/eachQuestion/" + id );
 		},
 
 		sendFormDescription(){
@@ -173,3 +194,13 @@ const app = createApp({
 
 })
 app.mount('#app')
+document.querySelector('.searchbox [type="reset"]').addEventListener('click', function() {  this.parentNode.querySelector('input').focus();});
+anime({
+    targets: '#QandA path',
+    strokeDashoffset: [anime.setDashoffset, 0],
+    easing: 'easeInOutSine',
+    duration: 1500,
+    delay: function(el, i) { return i * 150 },
+    direction: 'alternate',
+    loop: true
+});

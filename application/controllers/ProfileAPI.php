@@ -42,6 +42,12 @@ class ProfileAPI extends CI_Controller {
 		echo json_encode($response);
 	}
 
+	public function getFavorite()
+	{
+		$response["favorites"] = $this->Profile_model->getFavorite($this->session->userdata('id'));
+		echo json_encode($response);
+	}
+
 	public function updateDescription()
 	{
 		$data = array(
@@ -76,6 +82,14 @@ class ProfileAPI extends CI_Controller {
 	{
 		$url = $this->uri->segment(3);
 		$response = $this->Profile_model->deleteTag($url);
+		redirect('ProfileAPI','refresh');
+		
+	}
+
+	public function deleteFavorite()
+	{
+		$url = $this->uri->segment(3);
+		$response = $this->Profile_model->deleteFavorite($url);
 		redirect('ProfileAPI','refresh');
 		
 	}

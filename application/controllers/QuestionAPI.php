@@ -49,26 +49,25 @@ class QuestionAPI extends CI_Controller {
 		);
 		
 		$response = $this->Question_model->addQuestion($data ,  $this->input->post('questionTitle'));
-
 			$valueOne = $this->input->post('valueOne');
 			if($valueOne != '' || $valueOne != null){
-				$this->Question_model->addValueTag($this->input->post('userID'), $valueOne , $response);
+				$this->Question_model->addValueone($this->input->post('userID'), $valueOne , $response);
 			}
 			$valueTwo = $this->input->post('valueTwo');
 			if($valueTwo != '' || $valueTwo != null){
-				$this->Question_model->addValueTag( $this->input->post('userID'), $valueTwo , $response);
+				$this->Question_model->addValuetwo( $this->input->post('userID'), $valueTwo , $response);
 			}
 			$valueThree = $this->input->post('valueThree');
 			if($valueThree != '' || $valueThree != null){
-				$this->Question_model->addValueTag( $this->input->post('userID'), $valueThree , $response);
+				$this->Question_model->addValuethree( $this->input->post('userID'), $valueThree , $response);
 			}
 			$valueFour = $this->input->post('valueFour');
 			if($valueFour != '' || $valueFour != null){
-				$this->Question_model->addValueTag( $this->input->post('userID'), $valueFour , $response);
+				$this->Question_model->addValuefour( $this->input->post('userID'), $valueFour , $response);
 			}
 			$valueFive = $this->input->post('valueFive');
 			if($valueFive != '' || $valueFive != null){
-				$this->Question_model->addValueTag( $this->input->post('userID'), $valueFive , $response);
+				$this->Question_model->addValuefive( $this->input->post('userID'), $valueFive , $response);
 			}
 
 		redirect('eachQuestion','refresh');
@@ -79,9 +78,10 @@ class QuestionAPI extends CI_Controller {
 		$data = array(
 			'user_id' => $this->session->userdata('id'), 
 			'question_id' => $this->session->userdata('question_id'), 
-			'answer_id'=> $this->input->post('answerid'),
-			'comment_content'=> $this->input->post('commentcontent'),
+			'answer_content'=> $this->input->post('answercontent'),
 			'answer_timestamp' => date('Y-m-d H:i:s'),
+			'answer_upvote' => 0,
+			'answer_downvote' => 0,
 		);
 		$response = $this->Answer_model->addAnswer($data);
 		redirect('eachQuestion','refresh');
@@ -90,10 +90,12 @@ class QuestionAPI extends CI_Controller {
 	public function addComment()
 	{
 		$data = array(
-			'user_id' => $this->session->userdata('id'), 
-			'question_id' => $this->session->userdata('question_id'), 
-			'answer_id'=> $this->input->post('answerid'),
-			'comment_content'=> $this->input->post('commentcontent'),
+
+			'user_id' => $this->session->userdata('id'),
+			'question_id' => $this->session->userdata('question_id'),
+			'answer_id' => $this->input->post('answerId'),
+			'comment_content' => $this->input->post('comment'),
+
 		);
 		$response = $this->Answer_model->addComment($data);
 		redirect('eachQuestion','refresh');
@@ -103,10 +105,10 @@ class QuestionAPI extends CI_Controller {
 	{
 		$data = array(
 			'user_id' => $this->session->userdata('id'), 
-			'question_id' => $this->input->post('questionid'), 
+			'question_id' => $this->uri->segment(3), 
 		);
 
-		$response = $this->Profile_model->updateBio( $data);
+		$response = $this->Question_model->addFavorite($data);
 		redirect('eachQuestion','refresh');
 	}
 
@@ -143,13 +145,24 @@ class QuestionAPI extends CI_Controller {
 		echo json_encode($response);
 	}
 
+	public function getQuestionTag(){
+		$response["tags"] = $this->Tag_model->geteachQuestiontag();
+		echo json_encode($response);
+	}
+
+
+	public function checkFavorite(){
+		$response["checkFavorite"] = $this->Question_model->checkFavorite($this->session->userdata('question_id'));
+		echo json_encode($response);
+	}
+
 	public function getSingleQuestion()
 	{
 		$response["eachQuestions"] = $this->Question_model->getsingleQuestion($this->session->userdata('question_id'));
 		echo json_encode($response);
 	}
 
-	public function getQuestionUser()
+	public function getQuestionUser() // you can use join 
 	{
 		$response["questionUser"] = $this->Question_model->getQuestionUser( $this->uri->segment(3) );
 		echo json_encode($response);
@@ -168,34 +181,43 @@ class QuestionAPI extends CI_Controller {
 		echo json_encode($response);
 	}
 
+	
+	public function deleteFavorite()
+	{
+		$data = array(
+			'question_id' => $this->uri->segment(3), 
+		);
+
+		$response = $this->Question_model->deleteFavorite($data);
+		redirect('eachQuestion','refresh');
+	}
+
 	public function deleteAnswer()
 	{
 		$url = $this->uri->segment(3); // answer id
 		$response = $this->Answer_model->deleteAnswer($url);
-		redirect('ProfileAPI','refresh');
 	}
 
 	public function deleteComment()
 	{
 		$url = $this->uri->segment(3); // comment id
 		$response = $this->Answer_model->deleteComment($url);
-		redirect('ProfileAPI','refresh');
 	}
 
 	public function viewSearch()
 	{
 		$this->load->view('viewSearch');
-		$data = array('question_title' => $this->uri->segment(3));
+		$data = array('question_title' => urldecode( $this->uri->segment(3))); //https://www.php.net/manual/en/function.urldecode.php
 		$this->session->set_userdata( $data );
 	}
 
 	public function seachQuestion()
-	{
+	{ 
 
 		$data = array(
 			'question_title' => $this->session->userdata('question_title'), 
 		);
-		
+
 		$response['searchQuestion'] = $this->Question_model->seachQuestion($data); // return data
 
 		echo json_encode($response);

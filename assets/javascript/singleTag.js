@@ -59,6 +59,29 @@ const app = createApp({
 				console.log(err);
 			});
 		},
+
+		eachQuestion(id){
+			window.location.assign(this.url + "QuestionAPI/eachQuestion/" + id );
+		},
+
+		Taggle_upvote(id , count){
+			axios.post(this.url + "QuestionAPI/addUpvote/" + id + "/" + count )
+			.then((result) => {
+				console.log(result);
+			}).catch((err) => {
+				console.log(err);
+			});
+		},
+
+		Taggle_downvote(id , count){
+			axios.post(this.url + "QuestionAPI/addDownvote/" + id + "/" + count )
+			.then((result) => {
+				console.log(result);
+			}).catch((err) => {
+				console.log(err);
+			});
+		},
+
 		onEnter(){
 			axios.post(this.url + "QuestionAPI/viewSearch/" + this.search_text  )
 			.then((result) => {
@@ -72,3 +95,13 @@ const app = createApp({
 
 })
 app.mount('#app')
+document.querySelector('.searchbox [type="reset"]').addEventListener('click', function() {  this.parentNode.querySelector('input').focus();});
+anime({
+    targets: '#QandA path',
+    strokeDashoffset: [anime.setDashoffset, 0],
+    easing: 'easeInOutSine',
+    duration: 1500,
+    delay: function(el, i) { return i * 150 },
+    direction: 'alternate',
+    loop: true
+});

@@ -67,6 +67,21 @@ class Tag_model extends CI_Model {
 			return false;
 		}
 	}
+	
+	public function geteachQuestiontag()
+	{
+		
+		$this->db->select('tag.tag_id ,tag.tag_title, tag.tag_content, question_tag.question_id');
+		 $this->db->join('tag', 'question_tag.tag_id=tag.tag_id');
+		 $query =$this->db->get('question_tag');
+		
+		if ($query->num_rows() > 0) {
+			return  $query->result();
+		}else{
+			return false;
+		}
+		
+	}
 
 
 }

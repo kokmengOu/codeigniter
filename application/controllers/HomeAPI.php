@@ -8,6 +8,7 @@ class HomeAPI extends CI_Controller {
 		parent::__construct();
         $this->load->model('Question_model');
 		$this->load->model('Tag_model');
+		$this->load->model('RegisterAndLogin_model');
     }
 
 	public function index()
@@ -17,6 +18,7 @@ class HomeAPI extends CI_Controller {
 
 	public function logout()
 	{
+		$this->RegisterAndLogin_model->logout($this->session->userdata('id') );
 		$data = $this->session->all_userdata();
 		foreach($data as $row => $rows_value)
 		{

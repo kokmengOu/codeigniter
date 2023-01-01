@@ -199,12 +199,10 @@
 
 									<div class="card-body" v-for="user in users" :key="user.user_id">
 											<h5 class="card-title">{{user.user_FullName}}</h5>
-											<div class="card-body">
-													<a href="#" class="card-link btn btn-secondary">Card link</a>
-													<a href="#" class="card-link btn btn-secondary">Another link</a>
-													<a href="#" class="card-link btn btn-secondary">Another link</a>
-													<a href="#" class="card-link btn btn-secondary">Another link</a>
-													<a href="#" class="card-link btn btn-secondary">Another link</a>
+											<div class="card-body row" >
+												<div  class="col" v-for="tag in tags" :key="tag.tag_id">
+													<a href="#" class="card-link btn btn-secondary " @click="eachTag(tag.tag_id)">{{tag.tag_title}}</a>
+												</div>
 											</div>
 									</div>
 
@@ -219,6 +217,14 @@
 															<img src="<?php echo base_url(); ?>assets/img/9055013_bx_upvote_icon.png" alt="" srcset="" width="30" height="30">
 															</div>
 															<div class="d-flex justify-content-center align-items-center">{{eachQuestion.question_upvote}}</div>
+																			<div @click="Taggle_favorite(eachQuestion.question_id)" class="d-flex justify-content-center align-items-center" >
+																					<div v-if="favorite_isVisible == false" class="img">
+																							<img src="<?php echo base_url(); ?>assets/img/4879876_bookmark_favorite_outline_icon.png" alt="" srcset="" width="25" height="25">
+																					</div>
+																					<div v-if="favorite_isVisible == true" class="img">
+																							<img src="<?php echo base_url(); ?>assets/img/8664992_bookmark_favorite_icon.png" alt="" srcset=""width="25" height="25">
+																					</div>
+																			</div>
 															<div class="d-flex justify-content-center align-items-center">{{eachQuestion.question_downvote}}</div>
 															<div class="d-flex justify-content-center align-items-center" @click.once="eachQuestion.question_downvote++ , Taggle_downvote(eachQuestion.question_id ,eachQuestion.question_downvote)">
 															<img src="<?php echo base_url(); ?>assets/img/9054487_bx_downvote_icon.png" alt="" srcset="" width="30" height="30">
@@ -253,22 +259,34 @@
 													</div>
 													<div class="col">
 															<div class="row">
-																	<h6 class="card-title mb-2 text-black">NAME</h6>
-																	<p class="card-subtitle mb-2 text-muted">{{answer.answer_timestamp}}</p>
-															</div>
-															<div class="row">
-																	<p class="card-text" style="height: 4rem;">{{answer.answer_content}}</p>
+																<div class="row">
+																			<div class="col">
+																				<p class="card-text" style="height: 4rem;">{{answer.answer_content}}</p>
+																			</div>
+																			<div class="col d-grid d-md-flex justify-content-md-end">
+																				<button class="btn btn-outline-info" type="button" @click="deleteAnswer(answer.answer_id)">delete</button>
+																			</div>
+																</div>
+																			<p class="card-subtitle mb-2 text-muted">{{answer.answer_timestamp}}</p>
 															</div>
 															<div class="row  mt-4">
                                     <h6 class="card-title mb-2 text-black">Comment</h6>
                                     <div class="row m-2 " v-for="comment in comments" :key="comment.comment_id">
-                                            <p class="card-text text-muted ">{{comment.comment_content}}</p>
+																					<div class="row">
+																							<div class="col">
+																									<p class="card-text text-muted ">{{comment.comment_content}}</p>
+																							</div>
+																							<div class="col d-grid d-md-flex justify-content-md-end">
+																								<button class="btn btn-outline-info" type="button" @click="deleteComment(comment.comment_id)">delete</button>
+																							</div>
+																				</div>
+                                            
                                     </div>
                                 </div>
 															<div class="mt-4 row">
 																	<form class="needs-validation" novalidate>
 																			<div class="mb-2">
-																				<textarea class="form-control is-invalid" id="validationTextarea" placeholder="Comment"  rows="1" v-model="comment_text" required></textarea>
+																				<textarea class="form-control " :class="[isInvalidComment]" id="validationTextarea" placeholder="Comment"  rows="1" v-model="comment_text" required></textarea>
 																				<div class="invalid-feedback">
 																					Please enter a message in the textarea.
 																				</div>
@@ -287,7 +305,7 @@
                             <form class="needs-validation" novalidate>
                                 <label for="exampleFormControlTextarea1" class="form-label">Answer</label>
                                 <div class="mb-2">
-                                  <textarea class="form-control is-invalid" id="validationTextarea" placeholder="Comment"  rows="6" v-model="answer_text" required></textarea>
+                                  <textarea class="form-control " :class="[isInvalid]" id="validationTextarea" placeholder="Type answer ..."  rows="6" v-model="answer_text" required></textarea>
                                   <div class="invalid-feedback">
                                     Please enter a message in the textarea.
                                   </div>

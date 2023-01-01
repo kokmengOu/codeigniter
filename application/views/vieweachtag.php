@@ -207,16 +207,18 @@
                   <div class="card-body bg-white mb-1" v-for="questionsTag in questionTags" :key="questionsTag.question_id"> 
                       <div class="row align-items-start">
                           <div class="col-2">
-                              	<div class="d-flex justify-content-center align-items-center"  @click.once="question.question_upvote++ , Taggle_upvote(question.question_id , question.question_upvote)">
-									<img src="<?php echo base_url(); ?>assets/img/9055013_bx_upvote_icon.png" alt="" srcset="" width="30" height="30">
-								</div>
-								<div class="d-flex justify-content-center align-items-center">{{questionsTag.question_upvote}}</div>
-								<div class="d-flex justify-content-center align-items-center">{{questionsTag.question_downvote}}</div>
-								<div class="d-flex justify-content-center align-items-center"  @click.once="question.question_upvote++ , Taggle_upvote(question.question_id , question.question_upvote)">
-									<img src="<?php echo base_url(); ?>assets/img/9054487_bx_downvote_icon.png" alt="" srcset="" width="30" height="30">
-								</div>
-                          </div>
-                          <div class="col">
+
+															<div class="d-flex justify-content-center align-items-center" @click.once="questionsTag.question_upvote++ , Taggle_upvote(questionsTag.question_id , questionsTag.question_upvote)">
+															<img src="<?php echo base_url(); ?>assets/img/9055013_bx_upvote_icon.png" alt="" srcset="" width="30" height="30">
+															</div>
+															<div class="d-flex justify-content-center align-items-center">{{questionsTag.question_upvote}}</div>
+															<div class="d-flex justify-content-center align-items-center">{{questionsTag.question_downvote}}</div>
+															<div class="d-flex justify-content-center align-items-center" @click.once="questionsTag.question_downvote++ , Taggle_downvote(questionsTag.question_id ,questionsTag.question_downvote)">
+															<img src="<?php echo base_url(); ?>assets/img/9054487_bx_downvote_icon.png" alt="" srcset="" width="30" height="30">
+															</div>
+
+                    </div>
+                          <div class="col" @click="eachQuestion(questionsTag.question_id)">
                               <div class="row">
                                   <h6 class="card-title mb-2 text-black">{{questionsTag.question_title}}</h6>
                                   <p class="card-subtitle mb-2 text-muted">{{questionsTag.question_published}}</p>

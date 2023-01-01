@@ -234,7 +234,7 @@
                       <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact" type="button" role="tab" aria-controls="contact" aria-selected="false">Contact</button>
                     </li>
                   </ul>
-                  <div class="tab-content" id="myTabContent">
+                  <div class="tab-content overflow-auto" id="myTabContent">
                     <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
 
 																	<div class="container profile_parent"  v-for="Eachuser in Eachusers" :key="Eachuser.user_id" >

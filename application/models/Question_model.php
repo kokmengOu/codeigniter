@@ -12,10 +12,6 @@ class Question_model extends CI_Model {
 
 	public function getQuestion()
 	{
-		$this->db->select('user_detail.user_FullName,question.question_id, question.question_title, question.question_content, question.question_published, question.question_upvote, question.question_downvote, question.tag_one, question.tag_two, question.tag_three, question.tag_four, question.tag_five ');
-		
-		$this->db->join('user_detail', 'user_detail.user_id=question.question_id');
-		
 		$query = $this->db->get('question');
 		
 		if ($query->num_rows() > 0) {
@@ -83,7 +79,6 @@ class Question_model extends CI_Model {
 	{
 		if($this->db->insert($this->table,$data)) {
 
-			$this->db->select('question_id');
 			$this->db->where('question_title', $title);
 			$query = $this->db->get($this->table);
 			if($query->num_rows() > 0){
@@ -100,10 +95,92 @@ class Question_model extends CI_Model {
 		}
 	}
 
-	public function addValueTag($user, $tag, $question)
+	public function addValuefive($user, $tag, $question)
 	{
+		$this->db->where('tag_title', $tag);
+		$query = $this->db->get('tag');
+		if($query->num_rows() > 0){
+			foreach ($query->result() as $row ) {
+				$value = array(
+					'user_id' => $user, 
+					'tag_id' => $row->tag_id, 
+					'question_id' => $question,
+				);
+				if($this->db->insert('question_tag', $value )) {
+					return true;
+				}
+				else{
+					return false;
+				}
+			}
+		}
+	}
 
-		$this->db->select('tag_id');
+	public function addValueone($user, $tag, $question)
+	{
+		$this->db->where('tag_title', $tag);
+		$query = $this->db->get('tag');
+		if($query->num_rows() > 0){
+			foreach ($query->result() as $row ) {
+				$value = array(
+					'user_id' => $user, 
+					'tag_id' => $row->tag_id, 
+					'question_id' => $question,
+				);
+				if($this->db->insert('question_tag', $value )) {
+					return true;
+				}
+				else{
+					return false;
+				}
+			}
+		}
+	}
+
+	public function addValuetwo($user, $tag, $question)
+	{
+		$this->db->where('tag_title', $tag);
+		$query = $this->db->get('tag');
+		if($query->num_rows() > 0){
+			foreach ($query->result() as $row ) {
+				$value = array(
+					'user_id' => $user, 
+					'tag_id' => $row->tag_id, 
+					'question_id' => $question,
+				);
+				if($this->db->insert('question_tag', $value )) {
+					return true;
+				}
+				else{
+					return false;
+				}
+			}
+		}
+	}
+
+	public function addValuethree($user, $tag, $question)
+	{
+		$this->db->where('tag_title', $tag);
+		$query = $this->db->get('tag');
+		if($query->num_rows() > 0){
+			foreach ($query->result() as $row ) {
+				$value = array(
+					'user_id' => $user, 
+					'tag_id' => $row->tag_id, 
+					'question_id' => $question,
+				);
+				if($this->db->insert('question_tag', $value )) {
+					return true;
+				}
+				else{
+					return false;
+				}
+			}
+		}
+	}
+
+	public function addValuefour($user, $tag, $question)
+	{
 		$this->db->where('tag_title', $tag);
 		$query = $this->db->get('tag');
 		if($query->num_rows() > 0){
@@ -137,5 +214,38 @@ class Question_model extends CI_Model {
 		
 	}
 
+	public function deleteFavorite($id)
+	{
+		$this->db->where($id);
+		$query = $this->db->delete('favorite');
+	}
+
+	public function addFavorite( $data)
+	{
+		if ($this->db->insert('favorite',$data)) {
+			return true;
+		}
+		else{
+			return false;
+		}
+	}
+
+	public function checkFavorite($id)
+	{
+		
+		$this->db->where('question_id', $id);
+		$query =$this->db->get('favorite');
+		if ($query->num_rows() > 0) {
+			$arrayName = array(
+				'check' =>true , 
+			);
+			return $arrayName;
+		}else{
+			$arrayName = array(
+				'check' =>false , 
+			);
+			return $arrayName;
+		}
+	}
 	
 }

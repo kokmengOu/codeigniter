@@ -25,7 +25,7 @@ class Answer_model extends CI_Model {
 	public function getComment($answer)
 	{
 		$this->db->where('question_id', $answer);
-		$result = $this->db->get($this->table);
+		$result = $this->db->get('comment');
 		if ($result->num_rows() > 0) {
 			return $result->result();
 		}else{
@@ -70,7 +70,7 @@ class Answer_model extends CI_Model {
 	public function deleteAnswer($id)
 	{
 		$data = array(
-			'question_id' => $id,
+			'answer_id' => $id,
 		);
 
 		$this->db->where($data);
@@ -80,7 +80,7 @@ class Answer_model extends CI_Model {
 	public function deleteComment($id)
 	{
 		$data = array(
-			'answer_id' => $id,
+			'comment_id' => $id,
 		);
 
 		$this->db->where($data);
