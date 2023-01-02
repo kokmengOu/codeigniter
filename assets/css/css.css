@@ -10,7 +10,7 @@
 	}
   
   :root{
-    --bg-container: #e9eaf0;
+    --bg-container: #ffffff;
   }
    
   body {
@@ -23,6 +23,7 @@
     font-size: 12px;
     background-color: var(--bg-container);
     color: #a0a5a8;
+		overflow: hidden;
   }
   
   .video-bg{
@@ -95,6 +96,13 @@
     border-radius: 8px;
     box-shadow: inset 2px 2px 4px #d1d9e6, inset -2px -2px 4px #f9f9f9;
   }
+
+	.isInvalid {
+		color: #ff0000;
+		background-color: #ffe6e6;
+		border: 1px solid #ff0000;
+	}
+
   .form__input:focus {
     box-shadow: inset 4px 4px 4px #d1d9e6, inset -4px -4px 4px #f9f9f9;
   }
@@ -142,7 +150,7 @@
     font-weight: 700;
     font-size: 14px;
     letter-spacing: 1.15px;
-    background-color: #ff003d;
+    background-color: #ae50c0;
     color: #f9f9f9;
     box-shadow: 8px 8px 16px #d1d9e6, -8px -8px 16px #f9f9f9;
     border: none;

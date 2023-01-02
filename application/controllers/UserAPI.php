@@ -47,7 +47,7 @@ class UserAPI extends CI_Controller {
 
 		$data = array(
 			'user_FullName' => $this->input->post('username'),
-			'user_Email' => $this->input->post('email'),
+			'user_Email' => strtolower($this->input->post('email')),
 			'user_passwordHash' => 	password_hash($this->input->post('password'), PASSWORD_BCRYPT, $options),
 			'user_Lastlogin' => date('Y-m-d H:i:s'),
 		);
@@ -66,7 +66,7 @@ class UserAPI extends CI_Controller {
 	public function login_post()
 	{
 		$this->is_available = null;
-		$email=$this->input->post('email');
+		$email=strtolower($this->input->post('email')) ;
 		$password=$this->input->post('password');
 		$response = $this->RegisterAndLogin_model->checkUser($email,$password);
 

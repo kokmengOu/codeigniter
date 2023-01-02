@@ -17,12 +17,14 @@ const app = createApp({
 	  register:{
 		username: null,
         email : null,
-        password : null
+        password : null,
+		repassword: null,
 	  },
 	  signIn :{
 		email : null,
         password : null
-	  }
+	  },
+	  isInvalid: '',
 
     }
   },
@@ -39,15 +41,13 @@ const app = createApp({
 				if(response.data.is_available != "yes" )
 				{
 					console.log(response.data.is_available);
-					this.dynamic_class = false;
-					this.message = 'This Email is Available for registration';
-					this.is_disable = false;
-					this.class_name = 'danger'
-				}else{
 					this.dynamic_class = true;
+					this.message = 'This Email is Available for registration';
+					this.class_name = 'success'
+				}else{
+					this.dynamic_class = false;
 					this.message = 'This email is already registered';
-					this.is_disable = true;
-					this.class_name = 'success';
+					this.class_name = 'danger';
 				}
 			})
 		}
@@ -55,28 +55,58 @@ const app = createApp({
 	
 
     addUser(){
-      const form = new FormData();
-      form.append("username", this.register.username);
-      form.append("email" , this.register.email);
-      form.append("password", this.register.password);
-      axios.post(this.url + "UserAPI/register_post" , form)
-          .then(() => {
-              alert("You have been successfully registered , Please sign in you account")
-          }).catch((err) => {
-              console.log(err);
-          });
+		if( this.register.username != '' && this.register.username != null )  {
+			if (this.register.email != '' && this.register.email != null) {
+				if (this.register.password != '' && this.register.password != null) {
+					if (this.register.repassword != '' && this.register.repassword != null) {
+						if(this.register.password == this.register.repassword){
+							const form = new FormData();
+							form.append("username", this.register.username);
+							form.append("email" , this.register.email);
+							form.append("password", this.register.password);
+							axios.post(this.url + "UserAPI/register_post" , form)
+								.then(() => {
+									alert("You have been successfully registered , Please sign in you account");
+									window.location.assign(this.url + 'UserAPI/index');
+								}).catch((err) => {
+									console.log(err);
+								});
+						}else{
+							alert('Password need to be match Re-password');
+						}
+					}else{
+						alert('Need Re-password');
+					}
+				}else{
+					alert('Need Password');
+				}
+			}else{
+				alert('Need email');
+			}
+		}else{
+			alert('Need username');
+		}
     },
 
-	checksignIn(){
-		const form = new FormData();
-		form.append('email', this.signIn.email);
-		form.append('password', this.signIn.password);
-		axios.post(this.url + "UserAPI/login_post", form)
-			.then((result) => {
-				console.log(result.data.login_is_available);
-				window.location.assign(this.url + "HomeAPI/index");
-			})
-	}
+		checksignIn(){
+
+			if (this.signIn.email != '' && this.signIn.email != null) {
+				if (this.signIn.password != '' && this.signIn.password != null) {
+					const form = new FormData();
+					form.append('email', this.signIn.email);
+					form.append('password', this.signIn.password);
+					axios.post(this.url + "UserAPI/login_post", form)
+						.then((result) => {
+							console.log(result.data.login_is_available);
+							window.location.assign(this.url + "HomeAPI/index");
+						})
+				} else {
+					alert('Need password');
+				}
+			} else {
+				alert('Need email');
+			}
+		}
 	}
 
 })
